@@ -38,14 +38,16 @@ const productsData = [
         options: ["Красное полусладкое", "Белое полусладкое"]
     },
     {
+            {
         id: 5,
         name: "Nabucco",
         category: "wine",
         price: 47040,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png", 
-        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
-        imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
-        imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
+        // По умолчанию (Гранат / Персик):
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png", 
+        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
+        imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
+        imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
         description: "Фруктовая линейка Nabucco. Креп. 11%",
         options: [
             "Красное полусладкое ГРАНАТ", 
@@ -151,13 +153,21 @@ function changeProductImage(productId) {
 
     if (productId === 5) {
         if (val === "Красное полусладкое ВИШНЯ" || val === "Белое сухое МУСКАТ") {
-            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png";
+            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png";
         } else if (val === "Розовое сухое КЛУБНИКА") {
-            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png";
+            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png";
         } else {
             // ГРАНАТ и ПЕРСИК
-            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png";
+            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png";
         }
+    } else if (productId === 3) {
+        if (val === "Розовое полусладкое") {
+            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png";
+        } else {
+            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/6.png";
+        }
+    }
+}
     } else if (productId === 3) {
         if (val === "Розовое полусладкое") {
             img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png";
