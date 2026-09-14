@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP VINO — Главная</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+    <header class="glass-header">
+        <nav class="nav-menu">
+            <a href="index.html" class="active">Главная</a>
+            <a href="catalog.html">Каталог & Цены</a>
+            <a href="contacts.html">Контакты</a>
+            <div class="cart-badge" id="cartTrigger">🛒 Корзина (<span id="cartCount">0</span>)</div>
+        </nav>
+        <div class="brand-subtitle">Итальянские традиции с 2006 года</div>
+        <h1>VIP VINO</h1>
+        <p>Эксклюзивная коллекция натуральных вин, игристых напитков и шампанского премиум-класса</p>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h2 class="section-title">О нашей компании</h2>
+            <div class="glass-card info-box">
+                <p><b>VIP VINO</b> — это многолетний опыт поставок элитных алкогольных напитков. Мы предлагаем изысканные вина, созданные по классическим итальянским рецептам с добавлением натуральных фруктовых экстрактов и отборных сортов винограда.</p>
+                <p style="margin-top: 15px;">Наши напитки сочетают в себе безупречное качество, гармоничный вкус и современный дизайн бутылки в стиле Liquid Glass.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Контакты руководства</h2>
+            <div class="glass-card contacts-card-box">
+                <div class="contacts-grid">
+                    <div class="contact-item">
+                        <h3>Дмитрий</h3>
+                        <a href="tel:+998909285688">+998 90 928-56-88</a>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Акбар</h3>
+                        <a href="tel:+998903475828">+998 90 347-58-28</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Модальное окно корзины -->
+    <div id="cartModal" class="modal-overlay hidden-content">
+        <div class="glass-card modal-content" style="max-width: 600px;">
+            <h3>Ваша корзина заказов</h3>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="storeNameInput" style="display: block; font-size: 0.9rem; margin-bottom: 5px; color: var(--wine-color); font-weight: 500;">Название магазина / торговой точки:</label>
+                <input type="text" id="storeNameInput" placeholder="Введите название магазина..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gold-color); background: rgba(255,253,228,0.7); font-family: 'Roboto', sans-serif;">
+            </div>
+
+            <div id="cartItemsList" class="cart-items-container">
+                <p>Корзина пуста</p>
+            </div>
+            
+            <div class="cart-total">Итого: <span id="cartTotalPrice">0</span> сум</div>
+            
+            <div class="modal-buttons" style="margin-bottom: 20px;">
+                <button id="closeCartBtn" class="btn-secondary">Закрыть</button>
+                <button id="checkoutBtn" class="btn-primary">Оформить заказ</button>
+            </div>
+
+            <div style="border-top: 1px solid rgba(114,47,55,0.2); padding-top: 15px;">
+                <h4 style="color: var(--wine-color); margin-bottom: 10px; font-size: 1.1rem;">История заказов</h4>
+                <div id="orderHistoryList" style="max-height: 150px; overflow-y: auto; font-size: 0.85rem; color: #444;">
+                    <p style="color: #666;">История заказов пуста</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 VIP VINO. Все права защищены.</p>
+        <p style="margin-top: 5px; color: var(--gold-color); font-weight: 500; letter-spacing: 1px;">MADE BY KIRILL</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
