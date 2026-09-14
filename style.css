@@ -25,6 +25,11 @@ body {
     min-height: 100vh;
 }
 
+/* Скрытие элементов (для корзины и других модалок) */
+.hidden-content {
+    display: none !important;
+}
+
 header {
     background: var(--wine-dark);
     color: var(--gold-color);
@@ -35,7 +40,7 @@ header {
     z-index: 1000;
 }
 
-.header-container {
+.header-container, .header-content {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -51,7 +56,7 @@ header {
     letter-spacing: 1px;
 }
 
-nav a {
+nav.nav-menu a, .nav-link {
     color: #fff;
     text-decoration: none;
     margin-left: 20px;
@@ -59,11 +64,11 @@ nav a {
     transition: color 0.3s ease;
 }
 
-nav a:hover, nav a.active {
+nav.nav-menu a:hover, nav.nav-menu a.active, .nav-link.active {
     color: var(--gold-color);
 }
 
-main {
+main, .main-container {
     flex: 1;
     max-width: 1200px;
     margin: 0 auto;
@@ -96,14 +101,14 @@ main {
     margin-top: 20px;
 }
 
-/* --- Исправленные стили для 3D-переворота карточек (без багов верстки) --- */
+/* --- Стили для 3D-переворота карточек --- */
 .product-card {
     perspective: 1000px;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
-    min-height: 440px; /* Минимальная высота, дальше растягивается по контенту */
+    min-height: 440px;
 }
 
 .card-inner {
@@ -173,14 +178,14 @@ main {
 }
 
 /* --- Модальное окно корзины --- */
-.modal {
-    display: none;
+.modal, .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 2000;
@@ -191,7 +196,7 @@ main {
     background: var(--bg-color);
     padding: 30px;
     border-radius: 12px;
-    width: 100%;
+    width: 90%;
     max-width: 500px;
     border: 2px solid var(--gold-color);
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -199,8 +204,8 @@ main {
     overflow-y: auto;
 }
 
-/* --- Плавающая кнопка корзины --- */
-.cart-floating-btn {
+/* --- Плавающая кнопка корзины (исправлено имя класса) --- */
+.floating-cart-btn, .cart-badge {
     position: fixed;
     bottom: 25px;
     right: 25px;
@@ -219,7 +224,7 @@ main {
     transition: background 0.3s;
 }
 
-.cart-floating-btn:hover {
+.floating-cart-btn:hover, .cart-badge:hover {
     background: var(--wine-dark);
 }
 
@@ -235,16 +240,16 @@ footer {
 
 /* --- Мобильная адаптивность --- */
 @media (max-width: 768px) {
-    .header-container {
+    .header-container, .header-content {
         flex-direction: column;
         gap: 10px;
         text-align: center;
     }
-    nav {
+    nav, .nav-menu {
         display: flex;
         gap: 15px;
     }
-    nav a {
+    nav a, .nav-link {
         margin-left: 0;
     }
     .catalog-grid {
