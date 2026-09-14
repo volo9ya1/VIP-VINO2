@@ -22,7 +22,10 @@ const productsData = [
         name: "Incontro",
         category: "wine",
         price: 47040,
+        // Основная картинка для Incontro (например, Красное и Белое)
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/6.png",
+        // Вторая картинка для Incontro (например, для Розового — замените ссылку на вашу, если она другая)
+        secondaryImage: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png", 
         description: "Гармоничное вино. Креп. 10.5%, сах. 50г",
         options: ["Красное полусладкое", "Белое полусладкое", "Розовое полусладкое"]
     },
@@ -40,8 +43,14 @@ const productsData = [
         name: "Nabucco",
         category: "wine",
         price: 47040,
+        // Картинка 1 (Гранат и Персик)
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
-        secondaryImage: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
+        // Картинка 2 (Вишня)
+        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
+        // Картинка 3 (Мускат) - если ссылки отличаются, подставьте нужные
+        imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
+        // Картинка 4 (Клубника) - та, что на вашем последнем скриншоте
+        imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png", 
         description: "Фруктовая линейка Nabucco. Креп. 11%",
         options: [
             "Красное полусладкое ГРАНАТ", 
@@ -126,10 +135,10 @@ function initCatalog() {
     });
 }
 
-// Функция автоматической смены картинки при выборе вкуса Nabucco
+// Универсальная функция смены картинок для Nabucco (id: 5) и Incontro (id: 3)
 function changeProductImage(productId) {
     const product = productsData.find(p => p.id === productId);
-    if (!product || !product.secondaryImage) return;
+    if (!product) return;
 
     const selectElement = document.getElementById(`option-${productId}`);
     const imgElement = document.getElementById(`img-${productId}`);
@@ -137,11 +146,25 @@ function changeProductImage(productId) {
 
     const selectedValue = selectElement.value;
 
-    // Если выбраны Гранат или Персик — показываем первую картинку, иначе вторую (Вишня, Мускат, Клубника)
-    if (selectedValue.includes("ГРАНАТ") || selectedValue.includes("ПЕРСИК")) {
-        imgElement.src = product.image;
-    } else {
-        imgElement.src = product.secondaryImage;
+    // Логика для Nabucco
+    if (productId === 5) {
+        if (selectedValue.includes("ГРАНАТ") || selectedValue.includes("ПЕРСИК")) {
+            imgElement.src = product.image;
+        } else if (selectedValue.includes("ВИШНЯ")) {
+            imgElement.src = product.imageCherry || product.image;
+        } else if (selectedValue.includes("МУСКАТ")) {
+            imgElement.src = product.imageMuscat || product.image;
+        } else if (selectedValue.includes("КЛУБНИКА")) {
+            imgElement.src = product.imageStrawberry || product.image;
+        }
+    } 
+    // Логика для Incontro
+    else if (productId === 3) {
+        if (selectedValue.includes("Розовое")) {
+            imgElement.src = product.secondaryImage || product.image;
+        } else {
+            imgElement.src = product.image;
+        }
     }
 }
 
@@ -290,7 +313,7 @@ function renderOrderHistory() {
 
     historyList.innerHTML = orderHistory.map(order => `
         <div style="background: rgba(255,253,228,0.5); padding: 8px; border-radius: 6px; margin-bottom: 8px; border: 1px solid rgba(212,175,55,0.4);">
-            <div style="font-weight: bold; color: var(--wine-color);">Магазин: ${order.store} (${order.date})</div>
+            <div style="font-weight: bold; color: var(--wine-color);">Магазин: `${order.store}` (${order.date})</div>
             <div style="font-size: 0.8rem; color: #555;">Итого: ${order.total.toLocaleString()} сум</div>
         </div>
     `).join('');
