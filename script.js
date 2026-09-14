@@ -296,7 +296,7 @@ function setupCartModal() {
             updateCartUI();
             if (storeNameInput) storeNameInput.value = '';
 
-4            alert('Заказ успешно оформлен! Спасибо.');
+            alert('Заказ успешно оформлен! Спасибо.');
             modal.classList.add('hidden-content');
         });
     }
