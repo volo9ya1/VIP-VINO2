@@ -42,11 +42,13 @@ const productsData = [
         name: "Nabucco",
         category: "wine",
         price: 47040,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
-        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
-        imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
-        imageStrawberry: 
-"https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
+        // По умолчанию (Гранат / Персик):
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png", 
+        // Вишня и Мускат:
+        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
+        imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
+        // Клубника:
+        imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
         description: "Фруктовая линейка Nabucco. Креп. 11%",
         options: [
             "Красное полусладкое ГРАНАТ", 
@@ -142,7 +144,7 @@ function initCatalog() {
     });
 }
 
-// --- СМЕНА ИЗОБРАЖЕНИЯ ПРИ ВЫБОРЕ ВАРИАНТА ---
+// --- ТОЧНАЯ СМЕНА КАРТИНКИ ДЛЯ NABUCCO ---
 function changeProductImage(productId) {
     const product = productsData.find(p => p.id === productId);
     if (!product) return;
@@ -155,13 +157,13 @@ function changeProductImage(productId) {
 
     if (productId === 5) {
         if (selectedValue.includes("ВИШНЯ")) {
-            imgElement.src = product.imageCherry;
+            imgElement.src = product.imageCherry; // Фото 1.png (Вишня/Мускат)
         } else if (selectedValue.includes("МУСКАТ")) {
-            imgElement.src = product.imageMuscat;
+            imgElement.src = product.imageMuscat; // Фото 1.png
         } else if (selectedValue.includes("КЛУБНИКА")) {
-            imgElement.src = product.imageStrawberry || product.image;
+            imgElement.src = product.imageStrawberry; // Фото 2.png (Клубника)
         } else {
-            imgElement.src = product.image;
+            imgElement.src = product.image; // Фото 3.png (Гранат/Персик)
         }
     } 
     else if (productId === 3) {
@@ -253,10 +255,10 @@ function changeQuantity(index, delta) {
     updateCartUI();
 }
 
-// --- НАСТРОЙКА МОДАЛЬНОГО ОКНА КОРЗИНЫ И ИСТОРИИ ---
+// --- НАСТРОЙКА МОДАЛЬНОГО ОКНА КОРЗИНЫ ---
 function setupCartModal() {
     const modal = document.getElementById('cartModal');
-    const triggers = document.querySelectorAll('#cartTrigger');
+    const triggers = document.querySelectorAll('#cartTrigger, .floating-cart-btn');
     const closeBtn = document.getElementById('closeCartBtn');
     const checkoutBtn = document.getElementById('checkoutBtn');
 
@@ -333,7 +335,6 @@ function setupCartModal() {
     }
 }
 
-// --- ВЫВОД ИСТОРИИ ЗАКАЗОВ ---
 function renderOrderHistory() {
     const historyList = document.getElementById('orderHistoryList');
     if (!historyList) return;
@@ -365,7 +366,6 @@ function renderOrderHistory() {
     }).join('');
 }
 
-// --- УВЕДОМЛЕНИЯ ---
 function showNotification(text) {
     const notif = document.createElement('div');
     notif.textContent = text;
