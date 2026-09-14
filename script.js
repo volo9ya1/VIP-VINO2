@@ -88,7 +88,17 @@ function initCatalog() {
 
     catalogContainer.innerHTML = '';
 
-    productsData.forEach(product => {
+    // Определяем, какую категорию показывать в зависимости от текущей страницы
+    const currentPage = window.location.pathname;
+    let filteredProducts = productsData;
+
+    if (currentPage.includes('wine.html')) {
+        filteredProducts = productsData.filter(p => p.category === 'wine');
+    } else if (currentPage.includes('sparkling.html')) {
+        filteredProducts = productsData.filter(p => p.category === 'sparkling');
+    }
+
+    filteredProducts.forEach(product => {
         const card = document.createElement('div');
         card.className = 'glass-card product-card';
 
