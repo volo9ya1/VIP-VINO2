@@ -332,12 +332,17 @@ select, input[type="text"] {
 }
 
 /* ==========================================
-   8. ПЛАВАЮЩАЯ КНОПКА КОРЗИНЫ
+   8. ПЛАВАЮЩАЯ КНОПКА КОРЗИНЫ (ФИКСИРОВАННАЯ)
    ========================================== */
-.floating-cart-btn, .cart-badge {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
+.floating-cart-btn, 
+.cart-badge, 
+#cartTrigger {
+    position: fixed !important;   /* Жестко привязываем к экрану */
+    bottom: 25px !important;      /* Отступ от нижнего края */
+    right: 25px !important;       /* Отступ от правого края */
+    top: auto !important;         /* Сбрасываем верхнюю позицию */
+    left: auto !important;        /* Сбрасываем левую позицию */
+    
     background: var(--gold-gradient);
     color: var(--wine-dark);
     border: 1.5px solid #fff;
@@ -347,23 +352,29 @@ select, input[type="text"] {
     font-weight: 700;
     font-size: 0.95rem;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-    z-index: 1500;
+    z-index: 1500 !important;      /* Поверх всего контента */
     display: flex;
     align-items: center;
     gap: 8px;
     transition: all 0.3s ease;
 }
 
-.floating-cart-btn:hover, .cart-badge:hover {
+.floating-cart-btn:hover, 
+.cart-badge:hover, 
+#cartTrigger:hover {
     transform: scale(1.06);
 }
 
-#cartCount {
-    background: var(--wine-dark);
-    color: var(--gold-light);
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 0.85rem;
+/* Мобильная адаптивность для корзины */
+@media (max-width: 768px) {
+    .floating-cart-btn, 
+    .cart-badge, 
+    #cartTrigger {
+        bottom: 15px !important;
+        right: 15px !important;
+        padding: 8px 16px;
+        font-size: 0.88rem;
+    }
 }
 
 /* ==========================================
