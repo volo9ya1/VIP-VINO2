@@ -1,76 +1,242 @@
 const productsData = [
-    { id: 1, name: "Classico", category: "wine", descRu: "Натуральное сухое вино (красное/белое).", descUz: "To'q yoqut rang yoki nozik somonrang vino.", specs: "креп. 12%", price: 47040 },
-    { id: 2, name: "Tradizione", category: "wine", descRu: "Натуральное полусухое вино.", descUz: "Qizil va oq uzumning yumshoq, yengil ta'mi.", specs: "креп. 11%, сах. 25г", price: 47040 },
-    { id: 3, name: "Incontro", category: "wine", descRu: "Натуральное полусладкое вино.", descUz: "U qizil-yoqut rangga ega va yoqimli shirin ta'mli.", specs: "креп. 10.5%, сах. 50г", price: 47040 },
-    { id: 4, name: "Emozioni", category: "wine", descRu: "Полусладкое вино с богатым ароматом.", descUz: "Aromatli, yoqimli ta'm xarakterdir.", specs: "креп. 10.5%, сах. 80г", price: 47040 },
-    { id: 5, name: "Nabucco Strawberry", category: "wine", descRu: "Розовое полусладкое с соком клубники.", descUz: "Qulupnay ta'mli maxsus vino.", specs: "креп. 11%, сах. 50г", price: 47040 },
-    { id: 6, name: "Buonsecco Asti Moscato", category: "sparkling", descRu: "Белое полусладкое газированное вино.", descUz: "Bayan Shirey, Rkasiteli, Risling, Muskat.", specs: "9.0% • 0.75 л", price: 54880 },
-    { id: 7, name: "Buonsecco Asti", category: "sparkling", descRu: "Полусладкое игристое шампанское.", descUz: "Maxsus oq shampan vinosi.", specs: "11% • 0.75 л", price: 54880 },
-    { id: 8, name: "Buonsecco Rose", category: "sparkling", descRu: "Газированное розовое сухое вино.", descUz: "Pushti gazlangan quruq vino.", specs: "11% • 0.75 л", price: 38080 }
+    {
+        id: 1,
+        name: "Nabucco Strawberry",
+        category: "wine",
+        price: 85000,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
+        description: "Иысканный напиток с натуральным экстрактом спелой клубники.",
+        options: null
+    },
+    {
+        id: 2,
+        name: "Buonsecco",
+        category: "sparkling",
+        price: 95000,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/10.png",
+        description: "Премиальное итальянское игристое вино.",
+        options: null
+    },
+    {
+        id: 3,
+        name: "Nabucco (Гранат / Персик)",
+        category: "wine",
+        price: 85000,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
+        description: "Фруктовое вино с нежным ароматом.",
+        options: ["Гранат", "Персик"]
+    },
+    {
+        id: 4,
+        name: "Nabucco (Вишня / Мускат)",
+        category: "wine",
+        price: 85000,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
+        description: "Насыщенный вкус отборного винограда и вишни.",
+        options: ["Вишня", "Мускат"]
+    },
+    {
+        id: 5,
+        name: "Classico",
+        category: "wine",
+        price: 90000,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/4.png",
+        description: "Классическое итальянское вино.",
+        options: ["Белый", "Красный"]
+    },
+    {
+        id: 6,
+        name: "Tradizione",
+        category: "wine",
+        price: 90000,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/5.png",
+        description: "Создано по традиционным рецептам Италии.",
+        options: ["Белый", "Красный"]
+    },
+    {
+        id: 7,
+        name: "Incontro",
+        category: "wine",
+        price: 88000,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/6.png",
+        description: "Гармоничное вино с мягким послевкусием.",
+        options: ["Белый", "Красный"]
+    },
+    {
+        id: 8,
+        name: "Incontro Розовый",
+        category: "wine",
+        price: 88000,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png",
+        description: "Элегантное розовое вино.",
+        options: null
+    },
+    {
+        id: 9,
+        name: "Emozioni",
+        category: "wine",
+        price: 92000,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/8.png",
+        description: "Вино, дарящее яркие эмоции.",
+        options: ["Белый", "Красный"]
+    },
+    {
+        id: 10,
+        name: "Desdemona / De Sole",
+        category: "wine",
+        price: 95000,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/9.png",
+        description: "Премиальная линейка изысканных вин.",
+        options: ["Белый", "Красный"]
+    }
 ];
 
-let cart = [];
+let cart = JSON.parse(localStorage.getItem('vip_vino_cart')) || [];
+let orderHistory = JSON.parse(localStorage.getItem('vip_vino_history')) || [];
 
-document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(() => {
-        const tableSkeleton = document.getElementById('tableSkeleton');
-        const priceTable = document.getElementById('priceTable');
-        const cardsSkeleton = document.getElementById('cardsSkeleton');
-        const catalogGrid = document.getElementById('catalogGrid');
+document.addEventListener('DOMContentLoaded', () => {
+    initCatalog();
+    updateCartUI();
+    setupCartModal();
+});
 
-        if (tableSkeleton) tableSkeleton.style.display = 'none';
-        if (priceTable) {
-            priceTable.classList.remove('hidden-content');
-            renderTable(productsData);
+function initCatalog() {
+    const catalogContainer = document.getElementById('catalogContainer');
+    if (!catalogContainer) return;
+
+    catalogContainer.innerHTML = '';
+
+    productsData.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'glass-card product-card';
+
+        let optionsHTML = '';
+        if (product.options && product.options.length > 0) {
+            optionsHTML = `
+                <div style="margin: 10px 0;">
+                    <label style="font-size: 0.85rem; color: var(--wine-color); display: block; margin-bottom: 3px;">Выберите вкус / тип:</label>
+                    <select id="option-${product.id}" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--gold-color); background: rgba(255,253,228,0.8); font-family: 'Roboto', sans-serif;">
+                        ${product.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                    </select>
+                </div>
+            `;
         }
 
-        if (cardsSkeleton) cardsSkeleton.style.display = 'none';
-        if (catalogGrid) {
-            catalogGrid.classList.remove('hidden-content');
-            renderCards(productsData);
-        }
-    }, 1200);
+        card.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="product-img" style="width: 100%; height: 220px; object-fit: contain; background: rgba(255,255,255,0.3); border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--gold-color);">
+            <h3 style="font-family: 'Playfair Display', serif; color: var(--wine-color); font-size: 1.2rem; margin-bottom: 5px;">${product.name}</h3>
+            <p style="font-size: 0.85rem; color: #555; margin-bottom: 10px; min-height: 35px;">${product.description}</p>
+            ${optionsHTML}
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                <span style="font-weight: bold; color: var(--wine-color); font-size: 1.1rem;">${product.price.toLocaleString()} сум</span>
+                <button onclick="addToCart(${product.id})" class="btn-primary" style="padding: 6px 12px; font-size: 0.9rem;">В корзину</button>
+            </div>
+        `;
 
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    filterButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            filterButtons.forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            const filter = e.target.getAttribute('data-filter');
-            
-            if (filter === 'all') {
-                renderTable(productsData);
-                renderCards(productsData);
-            } else {
-                const filtered = productsData.filter(p => p.category === filter);
-                renderTable(filtered);
-                renderCards(filtered);
-            }
-        });
+        catalogContainer.appendChild(card);
     });
+}
 
-    const cartTrigger = document.getElementById('cartTrigger');
-    const cartModal = document.getElementById('cartModal');
-    const closeCartBtn = document.getElementById('closeCartBtn');
-    const checkoutBtn = document.getElementById('checkoutBtn');
+function addToCart(productId) {
+    const product = productsData.find(p => p.id === productId);
+    if (!product) return;
 
-    if (cartTrigger) {
-        cartTrigger.addEventListener('click', () => {
-            cartModal.classList.remove('hidden-content');
-            updateCartModalUI();
+    let selectedOption = null;
+    if (product.options && product.options.length > 0) {
+        const selectElement = document.getElementById(`option-${productId}`);
+        if (selectElement) {
+            selectedOption = selectElement.value;
+        }
+    }
+
+    const existingIndex = cart.findIndex(item => item.id === productId && item.selectedOption === selectedOption);
+
+    if (existingIndex > -1) {
+        cart[existingIndex].quantity += 1;
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            selectedOption: selectedOption,
+            quantity: 1
         });
     }
 
-    if (closeCartBtn) {
-        closeCartBtn.addEventListener('click', () => {
-            cartModal.classList.add('hidden-content');
+    saveCart();
+    updateCartUI();
+    showNotification(`Товар "${product.name}"${selectedOption ? ' (' + selectedOption + ')' : ''} добавлен в корзину!`);
+}
+
+function saveCart() {
+    localStorage.setItem('vip_vino_cart', JSON.stringify(cart));
+}
+
+function updateCartUI() {
+    const cartCount = document.getElementById('cartCount');
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    if (cartCount) cartCount.textContent = totalItems;
+
+    const cartItemsList = document.getElementById('cartItemsList');
+    const cartTotalPrice = document.getElementById('cartTotalPrice');
+
+    if (cartItemsList) {
+        if (cart.length === 0) {
+            cartItemsList.innerHTML = '<p style="text-align: center; color: #666;">Корзина пуста</p>';
+        } else {
+            cartItemsList.innerHTML = cart.map((item, index) => `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(114,47,55,0.1); padding-bottom: 8px;">
+                    <div>
+                        <strong>${item.name}</strong> ${item.selectedOption ? '<br><small style="color: #666;">Вкус: ' + item.selectedOption + '</small>' : ''}
+                        <div style="font-size: 0.85rem; color: #555;">${item.price.toLocaleString()} сум x ${item.quantity}</div>
+                    </div>
+                    <div>
+                        <button onclick="changeQuantity(${index}, 1)" style="padding: 2px 8px; background: var(--gold-color); border: none; border-radius: 4px; cursor: pointer;">+</button>
+                        <span style="margin: 0 5px;">${item.quantity}</span>
+                        <button onclick="changeQuantity(${index}, -1)" style="padding: 2px 8px; background: var(--gold-color); border: none; border-radius: 4px; cursor: pointer;">-</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    }
+
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    if (cartTotalPrice) cartTotalPrice.textContent = totalPrice.toLocaleString();
+}
+
+function changeQuantity(index, delta) {
+    cart[index].quantity += delta;
+    if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+    }
+    saveCart();
+    updateCartUI();
+}
+
+function setupCartModal() {
+    const modal = document.getElementById('cartModal');
+    const trigger = document.getElementById('cartTrigger');
+    const closeBtn = document.getElementById('closeCartBtn');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+
+    if (trigger && modal) {
+        trigger.addEventListener('click', () => {
+            modal.classList.remove('hidden-content');
+            renderOrderHistory();
+        });
+    }
+
+    if (closeBtn && modal) {
+        closeBtn.addEventListener('click', () => {
+            modal.classList.add('hidden-content');
         });
     }
 
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', () => {
             if (cart.length === 0) {
-                alert('Корзина пуста!');
+                alert('Ваша корзина пуста!');
                 return;
             }
 
@@ -78,145 +244,68 @@ document.addEventListener("DOMContentLoaded", function() {
             const storeName = storeNameInput ? storeNameInput.value.trim() : '';
 
             if (!storeName) {
-                alert('Пожалуйста, введите название магазина!');
+                alert('Пожалуйста, введите название магазина или торговой точки!');
                 if (storeNameInput) storeNameInput.focus();
                 return;
             }
 
-            const totalSum = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
-            const newOrder = {
-                id: Date.now(),
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const orderRecord = {
                 date: new Date().toLocaleString(),
                 store: storeName,
                 items: [...cart],
-                total: totalSum
+                total: totalPrice
             };
 
-            let history = JSON.parse(localStorage.getItem('vipVinoHistory')) || [];
-            history.unshift(newOrder);
-            localStorage.setItem('vipVinoHistory', JSON.stringify(history));
+            orderHistory.unshift(orderRecord);
+            localStorage.setItem('vip_vino_history', JSON.stringify(orderHistory));
 
-            alert(`Заказ для магазина "${storeName}" успешно оформлен!`);
-            
             cart = [];
+            saveCart();
+            updateCartUI();
             if (storeNameInput) storeNameInput.value = '';
-            updateCartCount();
-            updateCartModalUI();
+
+            alert('Заказ успешно оформлен! Спасибо.');
+            modal.classList.add('hidden-content');
         });
     }
-});
-
-function renderTable(data) {
-    const tbody = document.getElementById('priceTableBody');
-    if (!tbody) return;
-    tbody.innerHTML = '';
-    data.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td><b>${item.name}</b></td>
-            <td>${item.descRu}</td>
-            <td>${item.specs}</td>
-            <td class="price">${item.price.toLocaleString()}</td>
-            <td><button class="btn-buy" onclick="addToCart(${item.id})">В корзину</button></td>
-        `;
-        tbody.appendChild(tr);
-    });
 }
 
-function renderCards(data) {
-    const grid = document.getElementById('catalogGrid');
-    if (!grid) return;
-    grid.innerHTML = '';
-    data.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'glass-card';
-        card.innerHTML = `
-            <h3 class="card-title">${item.name}</h3>
-            <div class="badge-container">
-                <span class="badge">${item.specs}</span>
-            </div>
-            <p class="desc-ru">${item.descRu}</p>
-            <p class="desc-uz">${item.descUz}</p>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                <span class="price" style="font-size: 1.1rem;">${item.price.toLocaleString()} сум</span>
-                <button class="btn-buy" onclick="addToCart(${item.id})">Заказать</button>
-            </div>
-        `;
-        grid.appendChild(card);
-    });
+function renderOrderHistory() {
+    const historyList = document.getElementById('orderHistoryList');
+    if (!historyList) return;
+
+    if (orderHistory.length === 0) {
+        historyList.innerHTML = '<p style="color: #666;">История заказов пуста</p>';
+        return;
+    }
+
+    historyList.innerHTML = orderHistory.map(order => `
+        <div style="background: rgba(255,253,228,0.5); padding: 8px; border-radius: 6px; margin-bottom: 8px; border: 1px solid rgba(212,175,55,0.4);">
+            <div style="font-weight: bold; color: var(--wine-color);">Магазин: ${order.store} (${order.date})</div>
+            <div style="font-size: 0.8rem; color: #555;">Итого: ${order.total.toLocaleString()} сум</div>
+        </div>
+    `).join('');
 }
 
-window.addToCart = function(id) {
-    const product = productsData.find(p => p.id === id);
-    if (!product) return;
-    
-    const existing = cart.find(item => item.id === id);
-    if (existing) {
-        existing.quantity += 1;
-    } else {
-        cart.push({ ...product, quantity: 1 });
-    }
-    
-    updateCartCount();
-    alert(`Товар "${product.name}" успешно добавлен в корзину!`);
-};
+function showNotification(text) {
+    const notif = document.createElement('div');
+    notif.textContent = text;
+    notif.style.position = 'fixed';
+    notif.style.bottom = '20px';
+    notif.style.right = '20px';
+    notif.style.background = 'var(--wine-color)';
+    notif.style.color = 'var(--gold-color)';
+    notif.style.padding = '10px 20px';
+    notif.style.borderRadius = '8px';
+    notif.style.border = '1px solid var(--gold-color)';
+    notif.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+    notif.style.zIndex = '1000';
+    notif.style.fontFamily = 'Roboto, sans-serif';
+    notif.style.fontSize = '0.9rem';
 
-function updateCartCount() {
-    const countSpan = document.getElementById('cartCount');
-    if (countSpan) {
-        const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-        countSpan.textContent = totalCount;
-    }
-}
-
-function updateCartModalUI() {
-    const listContainer = document.getElementById('cartItemsList');
-    const totalPriceSpan = document.getElementById('cartTotalPrice');
-    const historyListContainer = document.getElementById('orderHistoryList');
-    
-    if (listContainer && totalPriceSpan) {
-        if (cart.length === 0) {
-            listContainer.innerHTML = '<p style="text-align: center; color: #666;">Корзина пуста</p>';
-            totalPriceSpan.textContent = '0';
-        } else {
-            listContainer.innerHTML = '';
-            let total = 0;
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                const row = document.createElement('div');
-                row.className = 'cart-item-row';
-                row.innerHTML = `
-                    <span>${item.name} (x${item.quantity})</span>
-                    <b>${itemTotal.toLocaleString()} сум</b>
-                `;
-                listContainer.appendChild(row);
-            });
-            totalPriceSpan.textContent = total.toLocaleString();
-        }
-    }
-
-    if (historyListContainer) {
-        const history = JSON.parse(localStorage.getItem('vipVinoHistory')) || [];
-        if (history.length === 0) {
-            historyListContainer.innerHTML = '<p style="color: #666;">История заказов пуста</p>';
-        } else {
-            historyListContainer.innerHTML = '';
-            history.forEach(order => {
-                const orderDiv = document.createElement('div');
-                orderDiv.style.cssText = "background: rgba(255,255,255,0.4); padding: 8px; border-radius: 6px; margin-bottom: 8px; border: 1px solid rgba(255,215,0,0.3);";
-                
-                let itemsSummary = order.items.map(i => `${i.name} (x${i.quantity})`).join(', ');
-                
-                orderDiv.innerHTML = `
-                    <div style="font-weight: bold; color: var(--wine-color);">Магазин: ${order.store}</div>
-                    <div style="font-size: 0.8rem; color: #555;">Дата: ${order.date}</div>
-                    <div style="font-size: 0.82rem;">Товары: ${itemsSummary}</div>
-                    <div style="font-weight: bold; text-align: right;">Итого: ${order.total.toLocaleString()} сум</div>
-                `;
-                historyListContainer.appendChild(orderDiv);
-            });
-        }
-    }
+    document.body.appendChild(notif);
+    setTimeout(() => {
+        notif.remove();
+    }, 2500);
 }
