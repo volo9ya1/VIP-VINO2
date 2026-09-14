@@ -1,93 +1,75 @@
 const productsData = [
     {
         id: 1,
-        name: "Nabucco Strawberry",
+        name: "Classico",
         category: "wine",
-        price: 85000,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
-        description: "Иысканный напиток с натуральным экстрактом спелой клубники.",
-        options: null
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/4.png",
+        description: "Итальянское вино. Креп. 12%",
+        options: ["Красное сухое", "Белое сухое"]
     },
     {
         id: 2,
-        name: "Buonsecco",
-        category: "sparkling",
-        price: 95000,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/10.png",
-        description: "Премиальное итальянское игристое вино.",
-        options: null
+        name: "Tradizione",
+        category: "wine",
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/5.png",
+        description: "Традиционное вино. Креп. 11%, сах. 25г",
+        options: ["Красное полусухое", "Белое полусухое"]
     },
     {
         id: 3,
-        name: "Nabucco (Гранат / Персик)",
+        name: "Incontro",
         category: "wine",
-        price: 85000,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
-        description: "Фруктовое вино с нежным ароматом.",
-        options: ["Гранат", "Персик"]
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/6.png",
+        description: "Гармоничное вино. Креп. 10.5%, сах. 50г",
+        options: ["Красное полусладкое", "Белое полусладкое", "Розовое полусладкое"]
     },
     {
         id: 4,
-        name: "Nabucco (Вишня / Мускат)",
+        name: "Emozioni",
         category: "wine",
-        price: 85000,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
-        description: "Насыщенный вкус отборного винограда и вишни.",
-        options: ["Вишня", "Мускат"]
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/8.png",
+        description: "Яркие эмоции. Креп. 10.5%, сах. 80г",
+        options: ["Красное полусладкое", "Белое полусладкое"]
     },
     {
         id: 5,
-        name: "Classico",
+        name: "Nabucco",
         category: "wine",
-        price: 90000,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/4.png",
-        description: "Классическое итальянское вино.",
-        options: ["Белый", "Красный"]
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
+        description: "Фруктовая линейка Nabucco. Креп. 11%, сах. 50г",
+        options: ["Красное полусладкое ГРАНАТ", "Белое полусладкое ПЕРСИК", "Красное полусладкое ВИШНЯ", "Белое полусладкое МУСКАТ"]
     },
     {
         id: 6,
-        name: "Tradizione",
+        name: "Nabucco Strawberry",
         category: "wine",
-        price: 90000,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/5.png",
-        description: "Создано по традиционным рецептам Италии.",
-        options: ["Белый", "Красный"]
-    },
-    {
-        id: 7,
-        name: "Incontro",
-        category: "wine",
-        price: 88000,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/6.png",
-        description: "Гармоничное вино с мягким послевкусием.",
-        options: ["Белый", "Красный"]
-    },
-    {
-        id: 8,
-        name: "Incontro Розовый",
-        category: "wine",
-        price: 88000,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png",
-        description: "Элегантное розовое вино.",
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
+        description: "Розовое полусладкое КЛУБНИКА. Креп. 11%, сах. 50г",
         options: null
     },
     {
-        id: 9,
-        name: "Emozioni",
-        category: "wine",
-        price: 92000,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/8.png",
-        description: "Вино, дарящее яркие эмоции.",
-        options: ["Белый", "Красный"]
+        id: 7,
+        name: "Buonsecco ASTI",
+        category: "sparkling",
+        price: 54880,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/10.png",
+        description: "Шампанское полусладкое. 11% 0.75 л.",
+        options: null
     },
     {
-        id: 10,
-        name: "Desdemona / De Sole",
-        category: "wine",
-        price: 95000,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/9.png",
-        description: "Премиальная линейка изысканных вин.",
-        options: ["Белый", "Красный"]
+        id: 8,
+        name: "Buonsecco Розовое",
+        category: "sparkling",
+        price: 38080,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/10.png",
+        description: "Газированное розовое сухое вино. 11% 0.75 л.",
+        options: null
     }
 ];
 
@@ -114,7 +96,7 @@ function initCatalog() {
         if (product.options && product.options.length > 0) {
             optionsHTML = `
                 <div style="margin: 10px 0;">
-                    <label style="font-size: 0.85rem; color: var(--wine-color); display: block; margin-bottom: 3px;">Выберите вкус / тип:</label>
+                    <label style="font-size: 0.85rem; color: var(--wine-color); display: block; margin-bottom: 3px;">Выберите вариант:</label>
                     <select id="option-${product.id}" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--gold-color); background: rgba(255,253,228,0.8); font-family: 'Roboto', sans-serif;">
                         ${product.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
                     </select>
@@ -188,7 +170,7 @@ function updateCartUI() {
             cartItemsList.innerHTML = cart.map((item, index) => `
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(114,47,55,0.1); padding-bottom: 8px;">
                     <div>
-                        <strong>${item.name}</strong> ${item.selectedOption ? '<br><small style="color: #666;">Вкус: ' + item.selectedOption + '</small>' : ''}
+                        <strong>${item.name}</strong> ${item.selectedOption ? '<br><small style="color: #666;">Вариант: ' + item.selectedOption + '</small>' : ''}
                         <div style="font-size: 0.85rem; color: #555;">${item.price.toLocaleString()} сум x ${item.quantity}</div>
                     </div>
                     <div>
