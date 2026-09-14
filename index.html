@@ -4,61 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIP VINO — Главная</title>
-    <!-- Подключение шрифтов -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
-    <!-- Шапка сайта -->
     <header class="glass-header">
-        <div class="header-content">
-            <div class="brand">
-                <h1>VIP VINO</h1>
-                <p class="brand-subtitle">Итальянские традиции с 2006 года</p>
-            </div>
-            <nav class="nav-menu">
-                <a href="index.html" class="nav-link active">Главная</a>
-                <a href="wine.html" class="nav-link">Вина</a>
-                <a href="sparkling.html" class="nav-link">Шампанское</a>
-<a href="tel:+998909285688" style="color: var(--gold-color); text-decoration: none; font-weight: bold; font-size: 0.9rem;">📞 +998 90 928-56-88</a>
-            </nav>
-        </div>
+        <nav class="nav-menu">
+            <a href="index.html" class="active">Главная</a>
+            <a href="catalog.html">Весь каталог</a>
+            <a href="wine.html">Вина</a>
+            <a href="sparkling.html">Шампанское</a>
+            <a href="contacts.html">Контакты</a>
+            <div class="cart-badge" id="cartTrigger">🛒 Корзина (<span id="cartCount">0</span>)</div>
+        </nav>
+        <div class="brand-subtitle">Итальянские традиции с 2006 года</div>
+        <h1>VIP VINO</h1>
     </header>
 
-    <!-- Основной контент главной страницы -->
     <main class="container">
-        
-        <!-- Герой-блок / Приветствие -->
-        <section class="hero-section">
-            <span class="gold-badge">Элитный алкоголь</span>
-            <h1>VIP VINO</h1>
-            <p class="hero-desc">Итальянские традиции с 2006 года. Изысканные напитки премиального качества для вашего бизнеса и торжеств.</p>
-            
-            <div class="hero-buttons">
-                <a href="wine.html" class="btn-primary">Каталог вин</a>
-                <a href="sparkling.html" class="btn-primary">Шампанское</a>
+        <!-- Главный баннер -->
+        <div class="glass-card hero-card" style="text-align: center;">
+            <div class="badge">Элитный алкоголь</div>
+            <h2 class="hero-title">VIP VINO</h2>
+            <p class="hero-desc">
+                Итальянские традиции с 2006 года.<br>
+                Изысканные напитки премиального качества для вашего бизнеса и торжеств.
+            </p>
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
+                <a href="wine.html" class="btn-primary" style="text-decoration: none;">Каталог вин</a>
+                <a href="sparkling.html" class="btn-primary" style="text-decoration: none;">Шампанское</a>
             </div>
-        </section>
+        </div>
 
-        <!-- Блок "О компании" -->
-        <section class="about-section">
-            <h2>О нашей компании</h2>
-            <div class="gold-line"></div>
+        <!-- О компании -->
+        <div class="glass-card info-box" style="text-align: center; margin-top: 20px;">
+            <h2 class="section-title">О нашей компании</h2>
+            <div style="width: 50px; height: 2px; background: var(--gold-color); margin: 0 auto 15px auto;"></div>
             <p>
                 Мы поставляем элитные напитки высочайшего качества. Наш каталог включает в себя лучшие линейки вин и шампанского, проверенные временем и полюбившиеся клиентам.
             </p>
-        </section>
+        </div>
 
+        <!-- Блок Контактов -->
+        <div class="glass-card info-box" style="margin-top: 20px; text-align: center;">
+            <h3 style="color: var(--wine-color); font-family: 'Playfair Display', serif; margin-bottom: 15px;">Отдел продаж</h3>
+            
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px;">
+                <div style="background: rgba(255,253,228,0.7); padding: 15px; border-radius: 10px; border: 1px solid var(--gold-color); flex: 1; min-width: 200px;">
+                    <p style="font-weight: bold; color: var(--wine-color); margin-bottom: 5px;">Дмитрий</p>
+                    <a href="tel:+998909285688" style="font-size: 1.05rem; font-weight: bold; color: #333; text-decoration: none; display: block; margin-bottom: 8px;">+998 90 928-56-88</a>
+                    <a href="tel:+998909285688" class="btn-primary" style="display: inline-block; text-decoration: none; font-size: 0.85rem; padding: 6px 15px;">Позвонить</a>
+                </div>
+
+                <div style="background: rgba(255,253,228,0.7); padding: 15px; border-radius: 10px; border: 1px solid var(--gold-color); flex: 1; min-width: 200px;">
+                    <p style="font-weight: bold; color: var(--wine-color); margin-bottom: 5px;">Акбар</p>
+                    <a href="tel:+998903475828" style="font-size: 1.05rem; font-weight: bold; color: #333; text-decoration: none; display: block; margin-bottom: 8px;">+998 90 347-58-28</a>
+                    <a href="tel:+998903475828" class="btn-primary" style="display: inline-block; text-decoration: none; font-size: 0.85rem; padding: 6px 15px;">Позвонить</a>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <!-- Подвал сайта -->
+    <!-- Модальное окно корзины -->
+    <div id="cartModal" class="modal-overlay hidden-content">
+        <div class="glass-card modal-content" style="max-width: 600px;">
+            <h3>Ваша корзина заказов</h3>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="storeNameInput" style="display: block; font-size: 0.9rem; margin-bottom: 5px; color: var(--wine-color); font-weight: 500;">Название магазина / торговой точки:</label>
+                <input type="text" id="storeNameInput" placeholder="Введите название магазина..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gold-color); background: rgba(255,253,228,0.7); font-family: 'Roboto', sans-serif;">
+            </div>
+
+            <div id="cartItemsList" class="cart-items-container">
+                <p>Корзина пуста</p>
+            </div>
+            
+            <div class="cart-total">Итого: <span id="cartTotalPrice">0</span> сум</div>
+            
+            <div class="modal-buttons" style="margin-bottom: 20px;">
+                <button id="closeCartBtn" class="btn-secondary">Закрыть</button>
+                <button id="checkoutBtn" class="btn-primary">Оформить заказ</button>
+            </div>
+
+            <div style="border-top: 1px solid rgba(114,47,55,0.2); padding-top: 15px;">
+                <h4 style="color: var(--wine-color); margin-bottom: 10px; font-size: 1.1rem;">История заказов</h4>
+                <div id="orderHistoryList" style="max-height: 150px; overflow-y: auto; font-size: 0.85rem; color: #444;">
+                    <p style="color: #666;">История заказов пуста</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
-        <p>© 2026 VIP VINO. Все права защищены.</p>
-        <p class="author">MADE BY KIRILL</p>
+        <p>&copy; 2026 VIP VINO. Все права защищены.</p>
+        <p style="margin-top: 5px; color: var(--gold-color); font-weight: 500; letter-spacing: 1px;">MADE BY KIRILL</p>
     </footer>
 
+    <script src="script.js"></script>
 </body>
 </html>
