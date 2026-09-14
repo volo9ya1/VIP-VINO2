@@ -1,20 +1,27 @@
-/* --- Цветовая палитра и переменные --- */
+/* ==========================================
+   1. ЦВЕТОВАЯ ПАЛИТРА И ПЕРЕМЕННЫЕ
+   ========================================== */
 :root {
-    --wine-main: #4a151b;        /* Основной богатый винный фон */
+    --wine-main: #4a151b;        /* Основной глубокий винный фон */
     --wine-dark: #2d0b0f;        /* Тёмно-бордовый для шапки и подвала */
-    --wine-card: rgba(60, 16, 22, 0.75); /* Полупрозрачный стеклянный фон карточек */
     --gold-primary: #d4af37;     /* Благородное золото */
-    --gold-light: #f3e5ab;      /* Светлое золото для текста/акцентов */
+    --gold-light: #f3e5ab;      /* Светлое золото для текста и акцентов */
     --gold-gradient: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%);
-    --card-bg-inner: #fffdf8;    /* Фоновая подложка внутри карточки */
+    --card-bg-inner: #fffdf8;    /* Фоновая подложка карточек */
     --text-light: #fefefe;
     --text-dark: #2c2c2c;
     --radius-main: 16px;
     --border-gold: 1px solid rgba(212, 175, 55, 0.4);
-    --shadow-gold: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* --- Общие сбросы и стили --- */
+/* ==========================================
+   2. БАЗОВЫЕ СТИЛИ И СБРОС
+   ========================================== */
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -35,32 +42,34 @@ body {
     min-height: 100vh;
 }
 
-/* Скрытие элементов */
 .hidden-content {
     display: none !important;
 }
 
-/* --- Шапка сайта (Header) --- */
+/* ==========================================
+   3. ШАПКА САЙТА (HEADER)
+   ========================================== */
 header, .glass-header {
-    background: rgba(45, 11, 15, 0.92);
+    width: 100%;
+    background: rgba(45, 11, 15, 0.95);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     color: var(--gold-primary);
-    padding: 18px 20px;
+    padding: 16px 20px;
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-    box-shadow: 0 6px 25px rgba(0,0,0,0.5);
-    text-align: center;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
-.header-container, .header-content {
+.header-content {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .brand-subtitle {
@@ -68,8 +77,7 @@ header, .glass-header {
     color: var(--gold-light);
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin-top: 8px;
-    opacity: 0.9;
+    margin-top: 6px;
 }
 
 header h1 {
@@ -78,21 +86,14 @@ header h1 {
     color: var(--gold-light);
     margin: 4px 0;
     font-weight: 700;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-header p {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-/* --- Навигационное меню --- */
+/* Навигация */
 nav.nav-menu {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 8px;
     flex-wrap: wrap;
 }
 
@@ -101,58 +102,141 @@ nav.nav-menu a, .nav-link {
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
-    padding: 7px 16px;
+    padding: 7px 15px;
     border-radius: 25px;
-    border: 1px solid transparent;
     transition: all 0.3s ease;
 }
 
 nav.nav-menu a:hover {
     color: var(--gold-light);
-    border-color: rgba(212, 175, 55, 0.5);
+    background: rgba(212, 175, 55, 0.15);
 }
 
 nav.nav-menu a.active, .nav-link.active {
     color: var(--wine-dark);
     background: var(--gold-gradient);
     font-weight: 700;
-    box-shadow: 0 2px 10px rgba(212, 175, 55, 0.4);
+    box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
 }
 
-/* --- Главный контейнер --- */
+/* ==========================================
+   4. ОСНОВНОЙ КОНТЕЙНЕР
+   ========================================== */
 main, .main-container, .container {
     flex: 1;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 35px 20px;
+    padding: 30px 20px;
     width: 100%;
 }
 
 .page-title-section {
     text-align: center;
-    margin-bottom: 30px;
-}
-
-.page-title-section .subtitle {
-    font-size: 0.8rem;
-    color: var(--gold-primary);
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    margin-bottom: 25px;
 }
 
 .page-title-section h1 {
     font-family: 'Playfair Display', serif;
     color: var(--gold-light);
     font-size: 2.2rem;
-    margin: 5px 0;
+    margin: 4px 0;
 }
 
-.page-title-section .description {
-    color: rgba(255, 255, 255, 0.75);
+/* ==========================================
+   5. ГЛАВНАЯ СТРАНИЦА (INDEX.HTML)
+   ========================================== */
+.hero-section {
+    background: var(--card-bg-inner);
+    color: var(--wine-dark);
+    border-radius: 20px;
+    padding: 40px 25px;
+    border: 2px solid var(--gold-primary);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    margin-bottom: 25px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.gold-badge {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    color: #aa7c11;
+    border: 1px solid var(--gold-primary);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 15px;
+}
+
+.hero-section h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    color: var(--wine-dark);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.hero-desc {
+    color: #555;
+    font-size: 1rem;
+    max-width: 650px;
+    margin: 0 auto 25px;
+    line-height: 1.6;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hero-buttons .btn-primary {
+    padding: 10px 24px;
     font-size: 0.95rem;
 }
 
-/* --- Сетка каталога --- */
+/* Блок "О компании" */
+.about-section {
+    background: var(--card-bg-inner);
+    color: var(--wine-dark);
+    border-radius: 20px;
+    padding: 30px 25px;
+    border: 2px solid var(--gold-primary);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    text-align: center;
+}
+
+.about-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--wine-dark);
+    margin-bottom: 8px;
+}
+
+.gold-line {
+    width: 60px;
+    height: 2px;
+    background: var(--gold-gradient);
+    margin: 0 auto 15px;
+    border-radius: 2px;
+}
+
+.about-section p {
+    color: #444;
+    font-size: 0.95rem;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ==========================================
+   6. КАТАЛОГ И КАРТОЧКИ ТОВАРОВ
+   ========================================== */
 .catalog-grid, #catalogContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -160,7 +244,6 @@ main, .main-container, .container {
     margin-top: 20px;
 }
 
-/* --- Карточки товаров --- */
 .glass-card, .product-card {
     background: var(--card-bg-inner);
     border-radius: var(--radius-main);
@@ -172,31 +255,25 @@ main, .main-container, .container {
     flex-direction: column;
     justify-content: space-between;
     color: var(--text-dark);
+    overflow: hidden;
 }
 
 .glass-card:hover, .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.3);
 }
 
-/* Картинка товара */
 .product-img {
     width: 100%;
-    height: 230px;
+    height: 220px;
     object-fit: contain;
     background: #fff;
-    border-radius: 10px;
-    padding: 8px;
+    border-radius: 12px;
+    padding: 10px;
     margin-bottom: 12px;
     border: 1px solid rgba(212, 175, 55, 0.3);
-    transition: transform 0.3s ease;
 }
 
-.product-card:hover .product-img {
-    transform: scale(1.03);
-}
-
-/* Заголовки и текст внутри карточки */
 .product-card h3 {
     font-family: 'Playfair Display', serif;
     color: var(--wine-dark);
@@ -211,22 +288,23 @@ main, .main-container, .container {
     margin-bottom: 10px;
 }
 
-/* Выпадающие списки (Select) */
-.product-card select, select {
+/* Выпадающие списки и поля ввода */
+select, input[type="text"] {
     width: 100%;
-    padding: 8px 12px;
+    padding: 9px 12px;
     border-radius: 8px;
     border: 1px solid var(--gold-primary);
     background: #fffdf5;
     color: var(--wine-dark);
     font-family: 'Roboto', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 500;
+    font-size: 0.9rem;
     outline: none;
-    cursor: pointer;
+    box-sizing: border-box;
 }
 
-/* --- Кнопки --- */
+/* ==========================================
+   7. КНОПКИ
+   ========================================== */
 .btn-primary {
     background: var(--wine-main);
     color: var(--gold-light);
@@ -237,7 +315,8 @@ main, .main-container, .container {
     font-weight: 600;
     font-size: 0.9rem;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    display: inline-block;
 }
 
 .btn-primary:hover {
@@ -245,38 +324,24 @@ main, .main-container, .container {
     color: var(--wine-dark);
     border-color: var(--gold-primary);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: var(--wine-dark);
-    border: 1px solid var(--wine-dark);
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-    background: var(--wine-dark);
-    color: var(--gold-light);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
 }
 
 .w-100 {
     width: 100%;
 }
 
-/* --- Плавающая кнопка корзины --- */
+/* ==========================================
+   8. ПЛАВАЮЩАЯ КНОПКА КОРЗИНЫ
+   ========================================== */
 .floating-cart-btn, .cart-badge {
     position: fixed;
     bottom: 25px;
     right: 25px;
     background: var(--gold-gradient);
     color: var(--wine-dark);
-    border: 1px solid #fff;
-    padding: 12px 22px;
+    border: 1.5px solid #fff;
+    padding: 10px 20px;
     border-radius: 50px;
     cursor: pointer;
     font-weight: 700;
@@ -290,8 +355,7 @@ main, .main-container, .container {
 }
 
 .floating-cart-btn:hover, .cart-badge:hover {
-    transform: scale(1.07);
-    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
+    transform: scale(1.06);
 }
 
 #cartCount {
@@ -302,7 +366,9 @@ main, .main-container, .container {
     font-size: 0.85rem;
 }
 
-/* --- Модальное окно корзины --- */
+/* ==========================================
+   9. МОДАЛЬНОЕ ОКНО И ИСТОРИЯ ЗАКАЗОВ
+   ========================================== */
 .modal, .modal-overlay {
     position: fixed;
     top: 0;
@@ -315,93 +381,177 @@ main, .main-container, .container {
     justify-content: center;
     align-items: center;
     z-index: 2000;
+    padding: 15px;
 }
 
 .modal-content {
     background: #fffdf8;
     color: var(--text-dark);
-    padding: 28px;
-    border-radius: 18px;
-    width: 90%;
+    padding: 25px;
+    border-radius: 20px;
+    width: 100%;
     max-width: 480px;
     border: 2px solid var(--gold-primary);
     box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-    max-height: 85vh;
+    max-height: 90vh;
     overflow-y: auto;
     position: relative;
 }
 
+/* Стильный круглый крестик */
 .close-btn {
     position: absolute;
-    top: 12px;
-    right: 18px;
-    background: none;
-    border: none;
-    font-size: 1.8rem;
+    top: 14px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    background: rgba(74, 21, 27, 0.1);
+    border: 1px solid var(--gold-primary);
+    border-radius: 50%;
     color: var(--wine-dark);
+    font-size: 1.2rem;
+    line-height: 1;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+    background: var(--wine-main);
+    color: var(--gold-light);
 }
 
 .modal h2, .modal h3 {
     font-family: 'Playfair Display', serif;
     color: var(--wine-dark);
     margin-bottom: 15px;
+    font-size: 1.4rem;
 }
 
-.checkout-form input {
-    width: 100%;
-    padding: 10px 14px;
-    margin-bottom: 12px;
-    border-radius: 8px;
+.cart-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.cart-qty-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
     border: 1px solid var(--gold-primary);
-    background: #fff;
-    font-size: 0.9rem;
-    outline: none;
-}
-
-.cart-total {
-    font-size: 1.15rem;
+    background: var(--wine-main);
+    color: #fff;
+    cursor: pointer;
     font-weight: bold;
-    color: var(--wine-dark);
-    text-align: right;
-    margin: 15px 0;
 }
 
-/* --- Подвал --- */
+/* История заказов */
+.order-history-section {
+    margin-top: 20px;
+    border-top: 1px dashed var(--gold-primary);
+    padding-top: 15px;
+}
+
+.history-card {
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+    font-size: 0.88rem;
+}
+
+.history-card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    color: var(--wine-dark);
+    border-bottom: 1px solid rgba(74, 21, 27, 0.1);
+    padding-bottom: 4px;
+}
+
+.history-card-items {
+    color: #444;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    margin: 6px 0;
+}
+
+.history-card-total {
+    text-align: right;
+    color: var(--wine-dark);
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+
+/* Toast Уведомление */
+.toast-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--wine-dark);
+    color: var(--gold-light);
+    border: 1px solid var(--gold-primary);
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    z-index: 3000;
+    font-size: 0.9rem;
+}
+
+/* ==========================================
+   10. ПОДВАЛ (FOOTER)
+   ========================================== */
 footer {
     background: var(--wine-dark);
     color: rgba(255, 255, 255, 0.7);
     text-align: center;
-    padding: 22px 20px;
+    padding: 20px;
     font-size: 0.85rem;
     margin-top: auto;
     border-top: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 footer .author {
-    margin-top: 5px;
+    margin-top: 4px;
     color: var(--gold-primary);
     letter-spacing: 1.5px;
     font-weight: 600;
 }
 
-/* --- Мобильная адаптивность --- */
+/* ==========================================
+   11. МОБИЛЬНАЯ АДАПТИВНОСТЬ
+   ========================================== */
 @media (max-width: 768px) {
+    header, .glass-header {
+        padding: 12px 15px;
+    }
+
     .header-content {
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
     }
 
     nav.nav-menu {
-        gap: 6px;
+        gap: 4px;
     }
 
     nav.nav-menu a, .nav-link {
-        font-size: 0.85rem;
-        padding: 5px 12px;
+        font-size: 0.82rem;
+        padding: 4px 10px;
     }
 
     .catalog-grid, #catalogContainer {
         grid-template-columns: 1fr;
+    }
+
+    .floating-cart-btn, .cart-badge {
+        bottom: 15px;
+        right: 15px;
     }
 }
