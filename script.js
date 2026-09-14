@@ -40,17 +40,15 @@ const productsData = [
         name: "Nabucco",
         category: "wine",
         price: 47040,
-        // Основная картинка (Гранат и Персик)
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
-        // Вторая картинка для остальных вкусов (замените ссылку на вашу вторую картинку в GitHub, если имя отличается, например images/3.png или images/1.png)
         secondaryImage: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
-        description: "Фруктовая линейка Nabucco. Креп. 11%, сах. 50г",
+        description: "Фруктовая линейка Nabucco. Креп. 11%",
         options: [
             "Красное полусладкое ГРАНАТ", 
             "Белое полусладкое ПЕРСИК", 
             "Красное полусладкое ВИШНЯ", 
-            "Белое полусладкое МУСКАТ",
-            "Розовое полусладкое КЛУБНИКА"
+            "Белое сухое МУСКАТ",
+            "Розовое сухое КЛУБНИКА"
         ]
     },
     {
@@ -68,7 +66,7 @@ const productsData = [
         category: "sparkling",
         price: 38080,
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/10.png",
-        description: "Газированное розовое сухое вино. 11% 0.75 л.",
+        description: "Розовое сухое вино. 11% 0.75 л.",
         options: null
     }
 ];
@@ -128,7 +126,7 @@ function initCatalog() {
     });
 }
 
-// Функция автоматической смены картинки при выборе вкуса
+// Функция автоматической смены картинки при выборе вкуса Nabucco
 function changeProductImage(productId) {
     const product = productsData.find(p => p.id === productId);
     if (!product || !product.secondaryImage) return;
@@ -139,7 +137,7 @@ function changeProductImage(productId) {
 
     const selectedValue = selectElement.value;
 
-    // Если выбраны первые два вкуса (Гранат или Персик) — показываем первую картинку, иначе вторую
+    // Если выбраны Гранат или Персик — показываем первую картинку, иначе вторую (Вишня, Мускат, Клубника)
     if (selectedValue.includes("ГРАНАТ") || selectedValue.includes("ПЕРСИК")) {
         imgElement.src = product.image;
     } else {
