@@ -43,9 +43,9 @@ const productsData = [
         category: "wine",
         price: 47040,
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
-        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
+        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
         imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
-        imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
+        imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/ strawberry.png", // При необходимости смените на нужное фото клубники
         description: "Фруктовая линейка Nabucco. Креп. 11%",
         options: [
             "Красное полусладкое ГРАНАТ", 
@@ -84,7 +84,7 @@ const productsData = [
     }
 ];
 
-// Состояние корзины и истории заказов в LocalStorage
+// Состояние корзины и истории заказов
 let cart = JSON.parse(localStorage.getItem('vip_vino_cart')) || [];
 let orderHistory = JSON.parse(localStorage.getItem('vip_vino_history')) || [];
 
@@ -153,14 +153,14 @@ function changeProductImage(productId) {
     const selectedValue = selectElement.value;
 
     if (productId === 5) {
-        if (selectedValue.includes("ГРАНАТ") || selectedValue.includes("ПЕРСИК")) {
-            imgElement.src = product.image;
-        } else if (selectedValue.includes("ВИШНЯ")) {
-            imgElement.src = product.imageCherry || product.image;
+        if (selectedValue.includes("ВИШНЯ")) {
+            imgElement.src = product.imageCherry;
         } else if (selectedValue.includes("МУСКАТ")) {
-            imgElement.src = product.imageMuscat || product.image;
+            imgElement.src = product.imageMuscat;
         } else if (selectedValue.includes("КЛУБНИКА")) {
             imgElement.src = product.imageStrawberry || product.image;
+        } else {
+            imgElement.src = product.image;
         }
     } 
     else if (productId === 3) {
@@ -308,8 +308,7 @@ function setupCartModal() {
             }
 
             const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
-            // Формируем детальную запись заказа для истории
+
             const orderRecord = {
                 id: Date.now(),
                 date: new Date().toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
@@ -333,7 +332,7 @@ function setupCartModal() {
     }
 }
 
-// --- ИНФОРМАТИВНЫЙ ВЫВОД ИСТОРИИ ЗАКАЗОВ ---
+// --- ВЫВОД ИСТОРИИ ЗАКАЗОВ ---
 function renderOrderHistory() {
     const historyList = document.getElementById('orderHistoryList');
     if (!historyList) return;
@@ -344,7 +343,6 @@ function renderOrderHistory() {
     }
 
     historyList.innerHTML = orderHistory.map(order => {
-        // Подробный перечень купленных товаров
         const itemsDetail = order.items.map(i => 
             `• <strong>${i.name}</strong>${i.selectedOption ? ' (' + i.selectedOption + ')' : ''} — ${i.quantity} шт.`
         ).join('<br>');
@@ -366,7 +364,7 @@ function renderOrderHistory() {
     }).join('');
 }
 
-// --- ВСПОМОГАТЕЛЬНЫЕ УВЕДОМЛЕНИЯ ---
+// --- УВЕДОМЛЕНИЯ ---
 function showNotification(text) {
     const notif = document.createElement('div');
     notif.textContent = text;
