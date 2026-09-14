@@ -1,75 +1,97 @@
-// --- Данные товаров ---
 const productsData = [
     {
         id: 1,
-        category: 'sparkling',
-        name: 'Buonsecco ASTI',
-        description: 'Шампанское полусладкое. 11% 0.75 л.',
-        price: 54880,
-        image: 'images/ast.jpg' // замените на ваш путь к картинке
+        name: "Classico",
+        category: "wine",
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/4.png",
+        description: "Итальянское вино. Креп. 12%",
+        options: ["Красное сухое", "Белое сухое"]
     },
     {
         id: 2,
-        category: 'wine',
-        name: 'Chianti Classico',
-        description: 'Вино красное сухое. 13.5% 0.75 л.',
-        price: 125000,
-        image: 'images/chianti.jpg'
+        name: "Tradizione",
+        category: "wine",
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/5.png",
+        description: "Традиционное вино. Креп. 11%, сах. 25г",
+        options: ["Красное полусухое", "Белое полусухое"]
     },
     {
         id: 3,
-        category: 'sparkling',
-        name: 'Prosecco Superiore',
-        description: 'Иристое сухое вино. 11.5% 0.75 л.',
-        price: 89000,
-        image: 'images/prosecco.jpg',
-        options: ['0.75 л (Бутылка)', '1.5 л (Магнум)'] // Пример товара с вариантами
+        name: "Incontro",
+        category: "wine",
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/6.png",
+        secondaryImage: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png",
+        description: "Гармоничное вино. Креп. 10.5%, сах. 50г",
+        options: ["Красное полусладкое", "Белое полусладкое", "Розовое полусладкое"]
+    },
+    {
+        id: 4,
+        name: "Emozioni",
+        category: "wine",
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/8.png",
+        description: "Яркие эмоции. Креп. 10.5%, сах. 80г",
+        options: ["Красное полусладкое", "Белое полусладкое"]
+    },
+    {
+        id: 5,
+        name: "Nabucco",
+        category: "wine",
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
+        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
+        imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
+        imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
+        description: "Фруктовая линейка Nabucco. Креп. 11%",
+        options: [
+            "Красное полусладкое ГРАНАТ", 
+            "Белое полусладкое ПЕРСИК", 
+            "Красное полусладкое ВИШНЯ", 
+            "Белое сухое МУСКАТ",
+            "Розовое сухое КЛУБНИКА"
+        ]
+    },
+    {
+        id: 6,
+        name: "De Sole",
+        category: "wine",
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/9.png",
+        description: "Итальянское вино De Sole. Креп. 11.5%",
+        options: ["Красное сухое", "Белое сухое"]
+    },
+    {
+        id: 7,
+        name: "Buonsecco ASTI",
+        category: "sparkling",
+        price: 54880,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/10.png",
+        description: "Шампанское полусладкое. 11% 0.75 л.",
+        options: null
+    },
+    {
+        id: 8,
+        name: "Buonsecco Розовое",
+        category: "sparkling",
+        price: 38080,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/10.png",
+        description: "Розовое сухое вино. 11% 0.75 л.",
+        options: null
     }
 ];
 
-// --- Корзина (хранится в памяти сессии) ---
-let cart = [];
+let cart = JSON.parse(localStorage.getItem('vip_vino_cart')) || [];
+let orderHistory = JSON.parse(localStorage.getItem('vip_vino_history')) || [];
 
-// --- Инициализация при загрузке страницы ---
 document.addEventListener('DOMContentLoaded', () => {
     initCatalog();
-    renderCartBadge();
-    
-    // Создаем плавающую кнопку корзины, если её еще нет в HTML
-    if (!document.querySelector('.cart-floating-btn')) {
-        const floatBtn = document.createElement('button');
-        floatBtn.className = 'cart-floating-btn';
-        floatBtn.innerHTML = '🛒 Корзина <span id="cartCountBadge" style="background:#fff; color:var(--wine-dark); padding:2px 6px; border-radius:50%; font-size:0.75rem;">0</span>';
-        floatBtn.onclick = openCartModal;
-        document.body.appendChild(floatBtn);
-    }
-    
-    // Создаем модальное окно корзины в DOM, если его нет
-    if (!document.getElementById('cartModal')) {
-        const modalDiv = document.createElement('div');
-        modalDiv.id = 'cartModal';
-        modalDiv.className = 'modal';
-        modalDiv.innerHTML = `
-            <div class="modal-content">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h2 style="font-family: 'Playfair Display', serif; color: var(--wine-color);">Ваша корзина</h2>
-                    <button onclick="closeCartModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--wine-color);">×</button>
-                </div>
-                <div id="cartItemsContainer">
-                    <!-- Список товаров будет здесь -->
-                </div>
-                <div style="margin-top: 20px; border-top: 1px solid var(--gold-color); padding-top: 15px; display: flex; justify-content: space-between; align-items: center;">
-                    <strong style="font-size: 1.1rem;">Итого:</strong>
-                    <span id="cartTotalPrice" style="font-size: 1.2rem; font-weight: bold; color: var(--wine-color);">0 сум</span>
-                </div>
-                <button onclick="checkout()" class="btn-primary" style="width: 100%; margin-top: 20px; padding: 12px; font-size: 1rem;">Оформить заказ</button>
-            </div>
-        `;
-        document.body.appendChild(modalDiv);
-    }
+    updateCartUI();
+    setupCartModal();
 });
 
-// --- Отрисовка каталога товаров ---
 function initCatalog() {
     const catalogContainer = document.getElementById('catalogContainer');
     if (!catalogContainer) return;
@@ -79,7 +101,6 @@ function initCatalog() {
     const currentPage = window.location.pathname;
     let filteredProducts = productsData;
 
-    // Фильтрация в зависимости от страницы
     if (currentPage.includes('wine.html')) {
         filteredProducts = productsData.filter(p => p.category === 'wine');
     } else if (currentPage.includes('sparkling.html')) {
@@ -88,15 +109,14 @@ function initCatalog() {
 
     filteredProducts.forEach(product => {
         const card = document.createElement('div');
-        card.className = 'product-card';
+        card.className = 'glass-card product-card';
 
-        // Генерация селекта с вариантами (если они есть у товара)
         let optionsHTML = '';
         if (product.options && product.options.length > 0) {
             optionsHTML = `
-                <div style="margin: 8px 0;">
-                    <label style="font-size: 0.8rem; color: var(--wine-color); display: block; margin-bottom: 2px;">Вариант:</label>
-                    <select id="option-${product.id}" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--gold-color); background: #fff; font-size: 0.85rem;">
+                <div style="margin: 10px 0;">
+                    <label style="font-size: 0.85rem; color: var(--wine-color); display: block; margin-bottom: 3px;">Выберите вариант:</label>
+                    <select id="option-${product.id}" onchange="changeProductImage(${product.id})" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--gold-color); background: rgba(255,253,228,0.8); font-family: 'Roboto', sans-serif;">
                         ${product.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
                     </select>
                 </div>
@@ -104,19 +124,13 @@ function initCatalog() {
         }
 
         card.innerHTML = `
-            <div>
-                <div class="card-image-container">
-                    <img id="img-${product.id}" src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/150?text=VIP+VINO'">
-                </div>
-                <h3 class="product-title">${product.name}</h3>
-                <p class="product-desc">${product.description}</p>
-                ${optionsHTML}
-            </div>
-            <div>
-                <div class="product-footer">
-                    <span class="product-price">${product.price.toLocaleString()} сум</span>
-                    <button onclick="addToCart(event, ${product.id})" class="btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">В корзину</button>
-                </div>
+            <img id="img-${product.id}" src="${product.image}" alt="${product.name}" class="product-img" style="width: 100%; height: 220px; object-fit: contain; background: rgba(255,255,255,0.3); border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--gold-color);">
+            <h3 style="font-family: 'Playfair Display', serif; color: var(--wine-color); font-size: 1.2rem; margin-bottom: 5px;">${product.name}</h3>
+            <p style="font-size: 0.85rem; color: #555; margin-bottom: 10px; min-height: 35px;">${product.description}</p>
+            ${optionsHTML}
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                <span style="font-weight: bold; color: var(--wine-color); font-size: 1.1rem;">${product.price.toLocaleString()} сум</span>
+                <button onclick="addToCart(${product.id})" class="btn-primary" style="padding: 6px 12px; font-size: 0.9rem;">В корзину</button>
             </div>
         `;
 
@@ -124,145 +138,205 @@ function initCatalog() {
     });
 }
 
-// --- Добавление товара в корзину ---
-function addToCart(event, productId) {
-    event.stopPropagation();
+function changeProductImage(productId) {
     const product = productsData.find(p => p.id === productId);
     if (!product) return;
 
-    // Проверяем выбранный вариант (если есть селект)
-    let selectedOption = '';
-    const selectElem = document.getElementById(`option-${productId}`);
-    if (selectElem) {
-        selectedOption = selectElem.value;
+    const selectElement = document.getElementById(`option-${productId}`);
+    const imgElement = document.getElementById(`img-${productId}`);
+    if (!selectElement || !imgElement) return;
+
+    const selectedValue = selectElement.value;
+
+    if (productId === 5) {
+        if (selectedValue.includes("ГРАНАТ") || selectedValue.includes("ПЕРСИК")) {
+            imgElement.src = product.image;
+        } else if (selectedValue.includes("ВИШНЯ")) {
+            imgElement.src = product.imageCherry || product.image;
+        } else if (selectedValue.includes("МУСКАТ")) {
+            imgElement.src = product.imageMuscat || product.image;
+        } else if (selectedValue.includes("КЛУБНИКА")) {
+            imgElement.src = product.imageStrawberry || product.image;
+        }
+    } 
+    else if (productId === 3) {
+        if (selectedValue.includes("Розовое")) {
+            imgElement.src = product.secondaryImage || product.image;
+        } else {
+            imgElement.src = product.image;
+        }
+    }
+}
+
+function addToCart(productId) {
+    const product = productsData.find(p => p.id === productId);
+    if (!product) return;
+
+    let selectedOption = null;
+    if (product.options && product.options.length > 0) {
+        const selectElement = document.getElementById(`option-${productId}`);
+        if (selectElement) {
+            selectedOption = selectElement.value;
+        }
     }
 
-    // Ищем, есть ли уже такой товар с таким же вариантом в корзине
-    const existingItem = cart.find(item => item.id === productId && item.option === selectedOption);
+    const existingIndex = cart.findIndex(item => item.id === productId && item.selectedOption === selectedOption);
 
-    if (existingItem) {
-        existingItem.quantity += 1;
+    if (existingIndex > -1) {
+        cart[existingIndex].quantity += 1;
     } else {
         cart.push({
             id: product.id,
             name: product.name,
             price: product.price,
-            option: selectedOption,
+            image: product.image,
+            selectedOption: selectedOption,
             quantity: 1
         });
     }
 
-    renderCartBadge();
-    
-    // Легкая анимация подтверждения добавления
-    const btn = event.target;
-    const originalText = btn.innerText;
-    btn.innerText = '✓ Добавлено';
-    btn.style.background = '#2e7d32';
-    btn.style.color = '#fff';
-    setTimeout(() => {
-        btn.innerText = originalText;
-        btn.style.background = '';
-        btn.style.color = '';
-    }, 1000);
+    saveCart();
+    updateCartUI();
+    showNotification(`Товар "${product.name}"${selectedOption ? ' (' + selectedOption + ')' : ''} добавлен в корзину!`);
 }
 
-// --- Обновление значка количества товаров ---
-function renderCartBadge() {
-    const badge = document.getElementById('cartCountBadge');
-    if (badge) {
-        const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-        badge.innerText = totalCount;
-    }
+function saveCart() {
+    localStorage.setItem('vip_vino_cart', JSON.stringify(cart));
 }
 
-// --- Управление модальным окном корзины ---
-function openCartModal() {
-    const modal = document.getElementById('cartModal');
-    if (!modal) return;
+function updateCartUI() {
+    const cartCount = document.getElementById('cartCount');
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    if (cartCount) cartCount.textContent = totalItems;
 
-    renderCartItems();
-    modal.style.display = 'flex';
-}
+    const cartItemsList = document.getElementById('cartItemsList');
+    const cartTotalPrice = document.getElementById('cartTotalPrice');
 
-function closeCartModal() {
-    const modal = document.getElementById('cartModal');
-    if (modal) modal.style.display = 'none';
-}
-
-// Закрытие по клику вне модального окна
-window.onclick = function(event) {
-    const modal = document.getElementById('cartModal');
-    if (event.target === modal) {
-        closeCartModal();
-    }
-};
-
-// --- Отрисовка содержимого корзины ---
-function renderCartItems() {
-    const container = document.getElementById('cartItemsContainer');
-    const totalPriceElem = document.getElementById('cartTotalPrice');
-    if (!container) return;
-
-    if (cart.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: #666; padding: 20px 0;">Ваша корзина пуста</p>';
-        if (totalPriceElem) totalPriceElem.innerText = '0 сум';
-        return;
-    }
-
-    let html = '';
-    let totalSum = 0;
-
-    cart.forEach((item, index) => {
-        const itemSum = item.price * item.quantity;
-        totalSum += itemSum;
-
-        html += `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 8px;">
-                <div>
-                    <h4 style="font-size: 0.95rem; color: var(--wine-color);">${item.name}</h4>
-                    ${item.option ? `<small style="color: #666;">${item.option}</small>` : ''}
-                    <div style="font-size: 0.85rem; color: #555; margin-top: 2px;">${item.price.toLocaleString()} сум × ${item.quantity}</div>
+    if (cartItemsList) {
+        if (cart.length === 0) {
+            cartItemsList.innerHTML = '<p style="text-align: center; color: #666;">Корзина пуста</p>';
+        } else {
+            cartItemsList.innerHTML = cart.map((item, index) => `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(114,47,55,0.1); padding-bottom: 8px;">
+                    <div>
+                        <strong>${item.name}</strong> ${item.selectedOption ? '<br><small style="color: #666;">Вариант: ' + item.selectedOption + '</small>' : ''}
+                        <div style="font-size: 0.85rem; color: #555;">${item.price.toLocaleString()} сум x ${item.quantity}</div>
+                    </div>
+                    <div>
+                        <button onclick="changeQuantity(${index}, 1)" style="padding: 2px 8px; background: var(--gold-color); border: none; border-radius: 4px; cursor: pointer;">+</button>
+                        <span style="margin: 0 5px;">${item.quantity}</span>
+                        <button onclick="changeQuantity(${index}, -1)" style="padding: 2px 8px; background: var(--gold-color); border: none; border-radius: 4px; cursor: pointer;">-</button>
+                    </div>
                 </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <button onclick="changeQuantity(${index}, -1)" style="background: #ddd; border: none; width: 24px; height: 24px; border-radius: 4px; cursor: pointer; font-weight: bold;">-</button>
-                    <span style="font-size: 0.9rem; font-weight: bold;">${item.quantity}</span>
-                    <button onclick="changeQuantity(${index}, 1)" style="background: #ddd; border: none; width: 24px; height: 24px; border-radius: 4px; cursor: pointer; font-weight: bold;">+</button>
-                    <button onclick="removeFromCart(${index})" style="background: none; border: none; color: #c62828; cursor: pointer; font-size: 1.1rem; margin-left: 5px;" title="Удалить">🗑</button>
-                </div>
-            </div>
-        `;
-    });
+            `).join('');
+        }
+    }
 
-    container.innerHTML = html;
-    if (totalPriceElem) totalPriceElem.innerText = totalSum.toLocaleString() + ' сум';
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    if (cartTotalPrice) cartTotalPrice.textContent = totalPrice.toLocaleString();
 }
 
-// --- Изменение количества / удаление позиций в корзине ---
 function changeQuantity(index, delta) {
     cart[index].quantity += delta;
     if (cart[index].quantity <= 0) {
         cart.splice(index, 1);
     }
-    renderCartItems();
-    renderCartBadge();
+    saveCart();
+    updateCartUI();
 }
 
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    renderCartItems();
-    renderCartBadge();
+function setupCartModal() {
+    const modal = document.getElementById('cartModal');
+    const trigger = document.getElementById('cartTrigger');
+    const closeBtn = document.getElementById('closeCartBtn');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+
+    if (trigger && modal) {
+        trigger.addEventListener('click', () => {
+            modal.classList.remove('hidden-content');
+            renderOrderHistory();
+        });
+    }
+
+    if (closeBtn && modal) {
+        closeBtn.addEventListener('click', () => {
+            modal.classList.add('hidden-content');
+        });
+    }
+
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Ваша корзина пуста!');
+                return;
+            }
+
+            const storeNameInput = document.getElementById('storeNameInput');
+            const storeName = storeNameInput ? storeNameInput.value.trim() : '';
+
+            if (!storeName) {
+                alert('Пожалуйста, введите название магазина или торговой точки!');
+                if (storeNameInput) storeNameInput.focus();
+                return;
+            }
+
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const orderRecord = {
+                date: new Date().toLocaleString(),
+                store: storeName,
+                items: [...cart],
+                total: totalPrice
+            };
+
+            orderHistory.unshift(orderRecord);
+            localStorage.setItem('vip_vino_history', JSON.stringify(orderHistory));
+
+            cart = [];
+            saveCart();
+            updateCartUI();
+            if (storeNameInput) storeNameInput.value = '';
+
+            alert('Заказ успешно оформлен! Спасибо.');
+            modal.classList.add('hidden-content');
+        });
+    }
 }
 
-// --- Оформление заказа ---
-function checkout() {
-    if (cart.length === 0) {
-        alert('Корзина пуста!');
+function renderOrderHistory() {
+    const historyList = document.getElementById('orderHistoryList');
+    if (!historyList) return;
+
+    if (orderHistory.length === 0) {
+        historyList.innerHTML = '<p style="color: #666;">История заказов пуста</p>';
         return;
     }
-    alert('Спасибо за заказ! В ближайшее время с вами свяжется менеджер для подтверждения.');
-    cart = [];
-    renderCartItems();
-    renderCartBadge();
-    closeCartModal();
+
+    historyList.innerHTML = orderHistory.map(order => `
+        <div style="background: rgba(255,253,228,0.5); padding: 8px; border-radius: 6px; margin-bottom: 8px; border: 1px solid rgba(212,175,55,0.4);">
+            <div style="font-weight: bold; color: var(--wine-color);">Магазин: ${order.store} (${order.date})</div>
+            <div style="font-size: 0.8rem; color: #555;">Итого: ${order.total.toLocaleString()} сум</div>
+        </div>
+    `).join('');
+}
+
+function showNotification(text) {
+    const notif = document.createElement('div');
+    notif.textContent = text;
+    notif.style.position = 'fixed';
+    notif.style.bottom = '20px';
+    notif.style.right = '20px';
+    notif.style.background = 'var(--wine-color)';
+    notif.style.color = 'var(--gold-color)';
+    notif.style.padding = '10px 20px';
+    notif.style.borderRadius = '8px';
+    notif.style.border = '1px solid var(--gold-color)';
+    notif.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+    notif.style.zIndex = '1000';
+    notif.style.fontFamily = 'Roboto, sans-serif';
+    notif.style.fontSize = '0.9rem';
+
+    document.body.appendChild(notif);
+    setTimeout(() => {
+        notif.remove();
+    }, 2500);
 }
