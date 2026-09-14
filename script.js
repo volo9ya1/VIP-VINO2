@@ -1,3 +1,4 @@
+// --- БАЗА ДАННЫХ ТОВАРОВ ---
 const productsData = [
     {
         id: 1,
@@ -83,6 +84,7 @@ const productsData = [
     }
 ];
 
+// Состояние корзины и истории заказов в LocalStorage
 let cart = JSON.parse(localStorage.getItem('vip_vino_cart')) || [];
 let orderHistory = JSON.parse(localStorage.getItem('vip_vino_history')) || [];
 
@@ -92,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCartModal();
 });
 
+// --- ИНИЦИАЛИЗАЦИЯ И ОТРИСОВКА КАТАЛОГА ---
 function initCatalog() {
     const catalogContainer = document.getElementById('catalogContainer');
     if (!catalogContainer) return;
@@ -115,8 +118,8 @@ function initCatalog() {
         if (product.options && product.options.length > 0) {
             optionsHTML = `
                 <div style="margin: 10px 0;">
-                    <label style="font-size: 0.85rem; color: var(--wine-color); display: block; margin-bottom: 3px;">Выберите вариант:</label>
-                    <select id="option-${product.id}" onchange="changeProductImage(${product.id})" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--gold-color); background: rgba(255,253,228,0.8); font-family: 'Roboto', sans-serif;">
+                    <label style="font-size: 0.82rem; color: var(--wine-dark); display: block; margin-bottom: 4px; font-weight: 500;">Выберите вариант:</label>
+                    <select id="option-${product.id}" onchange="changeProductImage(${product.id})">
                         ${product.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
                     </select>
                 </div>
@@ -124,13 +127,13 @@ function initCatalog() {
         }
 
         card.innerHTML = `
-            <img id="img-${product.id}" src="${product.image}" alt="${product.name}" class="product-img" style="width: 100%; height: 220px; object-fit: contain; background: rgba(255,255,255,0.3); border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--gold-color);">
-            <h3 style="font-family: 'Playfair Display', serif; color: var(--wine-color); font-size: 1.2rem; margin-bottom: 5px;">${product.name}</h3>
-            <p style="font-size: 0.85rem; color: #555; margin-bottom: 10px; min-height: 35px;">${product.description}</p>
+            <img id="img-${product.id}" src="${product.image}" alt="${product.name}" class="product-img">
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
             ${optionsHTML}
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                <span style="font-weight: bold; color: var(--wine-color); font-size: 1.1rem;">${product.price.toLocaleString()} сум</span>
-                <button onclick="addToCart(${product.id})" class="btn-primary" style="padding: 6px 12px; font-size: 0.9rem;">В корзину</button>
+                <span style="font-weight: 700; color: var(--wine-dark); font-size: 1.15rem;">${product.price.toLocaleString()} сум</span>
+                <button onclick="addToCart(${product.id})" class="btn-primary">В корзину</button>
             </div>
         `;
 
@@ -138,6 +141,7 @@ function initCatalog() {
     });
 }
 
+// --- СМЕНА ИЗОБРАЖЕНИЯ ПРИ ВЫБОРЕ ВАРИАНТА ---
 function changeProductImage(productId) {
     const product = productsData.find(p => p.id === productId);
     if (!product) return;
@@ -168,6 +172,7 @@ function changeProductImage(productId) {
     }
 }
 
+// --- ДОБАВЛЕНИЕ В КОРЗИНУ ---
 function addToCart(productId) {
     const product = productsData.find(p => p.id === productId);
     if (!product) return;
@@ -197,13 +202,14 @@ function addToCart(productId) {
 
     saveCart();
     updateCartUI();
-    showNotification(`Товар "${product.name}"${selectedOption ? ' (' + selectedOption + ')' : ''} добавлен в корзину!`);
+    showNotification(`Добавлено: ${product.name}${selectedOption ? ' (' + selectedOption + ')' : ''}`);
 }
 
 function saveCart() {
     localStorage.setItem('vip_vino_cart', JSON.stringify(cart));
 }
 
+// --- ОБНОВЛЕНИЕ ИНТЕРФЕЙСА КОРЗИНЫ ---
 function updateCartUI() {
     const cartCount = document.getElementById('cartCount');
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -214,18 +220,19 @@ function updateCartUI() {
 
     if (cartItemsList) {
         if (cart.length === 0) {
-            cartItemsList.innerHTML = '<p style="text-align: center; color: #666;">Корзина пуста</p>';
+            cartItemsList.innerHTML = '<p style="text-align: center; color: #777; padding: 10px 0;">Корзина пуста</p>';
         } else {
             cartItemsList.innerHTML = cart.map((item, index) => `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(114,47,55,0.1); padding-bottom: 8px;">
+                <div class="cart-item-row">
                     <div>
-                        <strong>${item.name}</strong> ${item.selectedOption ? '<br><small style="color: #666;">Вариант: ' + item.selectedOption + '</small>' : ''}
-                        <div style="font-size: 0.85rem; color: #555;">${item.price.toLocaleString()} сум x ${item.quantity}</div>
+                        <strong style="color: var(--wine-dark);">${item.name}</strong> 
+                        ${item.selectedOption ? `<br><small style="color: #666;">Вариант: ${item.selectedOption}</small>` : ''}
+                        <div style="font-size: 0.85rem; color: #555; margin-top: 2px;">${item.price.toLocaleString()} сум × ${item.quantity}</div>
                     </div>
-                    <div>
-                        <button onclick="changeQuantity(${index}, 1)" style="padding: 2px 8px; background: var(--gold-color); border: none; border-radius: 4px; cursor: pointer;">+</button>
-                        <span style="margin: 0 5px;">${item.quantity}</span>
-                        <button onclick="changeQuantity(${index}, -1)" style="padding: 2px 8px; background: var(--gold-color); border: none; border-radius: 4px; cursor: pointer;">-</button>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <button onclick="changeQuantity(${index}, -1)" class="cart-qty-btn">-</button>
+                        <span style="font-weight: bold; min-width: 18px; text-align: center;">${item.quantity}</span>
+                        <button onclick="changeQuantity(${index}, 1)" class="cart-qty-btn">+</button>
                     </div>
                 </div>
             `).join('');
@@ -245,22 +252,33 @@ function changeQuantity(index, delta) {
     updateCartUI();
 }
 
+// --- НАСТРОЙКА МОДАЛЬНОГО ОКНА КОРЗИНЫ И ИСТОРИИ ---
 function setupCartModal() {
     const modal = document.getElementById('cartModal');
-    const trigger = document.getElementById('cartTrigger');
+    const triggers = document.querySelectorAll('#cartTrigger');
     const closeBtn = document.getElementById('closeCartBtn');
     const checkoutBtn = document.getElementById('checkoutBtn');
 
-    if (trigger && modal) {
+    triggers.forEach(trigger => {
         trigger.addEventListener('click', () => {
-            modal.classList.remove('hidden-content');
-            renderOrderHistory();
+            if (modal) {
+                modal.classList.remove('hidden-content');
+                renderOrderHistory();
+            }
         });
-    }
+    });
 
     if (closeBtn && modal) {
         closeBtn.addEventListener('click', () => {
             modal.classList.add('hidden-content');
+        });
+    }
+
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden-content');
+            }
         });
     }
 
@@ -272,19 +290,32 @@ function setupCartModal() {
             }
 
             const storeNameInput = document.getElementById('storeNameInput');
+            const userPhoneInput = document.getElementById('userPhone');
+
             const storeName = storeNameInput ? storeNameInput.value.trim() : '';
+            const userPhone = userPhoneInput ? userPhoneInput.value.trim() : '';
 
             if (!storeName) {
-                alert('Пожалуйста, введите название магазина или торговой точки!');
+                alert('Пожалуйста, введите название магазина!');
                 if (storeNameInput) storeNameInput.focus();
                 return;
             }
 
+            if (!userPhone) {
+                alert('Пожалуйста, введите ваш номер телефона!');
+                if (userPhoneInput) userPhoneInput.focus();
+                return;
+            }
+
             const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            // Формируем детальную запись заказа для истории
             const orderRecord = {
-                date: new Date().toLocaleString(),
+                id: Date.now(),
+                date: new Date().toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
                 store: storeName,
-                items: [...cart],
+                phone: userPhone,
+                items: JSON.parse(JSON.stringify(cart)),
                 total: totalPrice
             };
 
@@ -296,45 +327,50 @@ function setupCartModal() {
             updateCartUI();
             if (storeNameInput) storeNameInput.value = '';
 
-            alert('Заказ успешно оформлен! Спасибо.');
+            alert('Заказ успешно оформлен!');
             modal.classList.add('hidden-content');
         });
     }
 }
 
+// --- ИНФОРМАТИВНЫЙ ВЫВОД ИСТОРИИ ЗАКАЗОВ ---
 function renderOrderHistory() {
     const historyList = document.getElementById('orderHistoryList');
     if (!historyList) return;
 
     if (orderHistory.length === 0) {
-        historyList.innerHTML = '<p style="color: #666;">История заказов пуста</p>';
+        historyList.innerHTML = '<p style="color: #777; font-size: 0.85rem; text-align: center;">История заказов пуста</p>';
         return;
     }
 
-    historyList.innerHTML = orderHistory.map(order => `
-        <div style="background: rgba(255,253,228,0.5); padding: 8px; border-radius: 6px; margin-bottom: 8px; border: 1px solid rgba(212,175,55,0.4);">
-            <div style="font-weight: bold; color: var(--wine-color);">Магазин: ${order.store} (${order.date})</div>
-            <div style="font-size: 0.8rem; color: #555;">Итого: ${order.total.toLocaleString()} сум</div>
-        </div>
-    `).join('');
+    historyList.innerHTML = orderHistory.map(order => {
+        // Подробный перечень купленных товаров
+        const itemsDetail = order.items.map(i => 
+            `• <strong>${i.name}</strong>${i.selectedOption ? ' (' + i.selectedOption + ')' : ''} — ${i.quantity} шт.`
+        ).join('<br>');
+
+        return `
+            <div class="history-card">
+                <div class="history-card-header">
+                    <span><strong>Магазин:</strong> ${order.store}</span>
+                    <small style="color: #666;">${order.date}</small>
+                </div>
+                <div class="history-card-items">
+                    ${itemsDetail}
+                </div>
+                <div class="history-card-total">
+                    Итого: <strong>${order.total.toLocaleString()} сум</strong>
+                </div>
+            </div>
+        `;
+    }).join('');
 }
 
+// --- ВСПОМОГАТЕЛЬНЫЕ УВЕДОМЛЕНИЯ ---
 function showNotification(text) {
     const notif = document.createElement('div');
     notif.textContent = text;
-    notif.style.position = 'fixed';
-    notif.style.bottom = '20px';
-    notif.style.right = '20px';
-    notif.style.background = 'var(--wine-color)';
-    notif.style.color = 'var(--gold-color)';
-    notif.style.padding = '10px 20px';
-    notif.style.borderRadius = '8px';
-    notif.style.border = '1px solid var(--gold-color)';
-    notif.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
-    notif.style.zIndex = '1000';
-    notif.style.fontFamily = 'Roboto, sans-serif';
-    notif.style.fontSize = '0.9rem';
-
+    notif.className = 'toast-notification';
     document.body.appendChild(notif);
     setTimeout(() => {
         notif.remove();
