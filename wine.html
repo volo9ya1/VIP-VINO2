@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Итальянские вина — VIP VINO</title>
+    <meta name="description" content="Каталог эксклюзивных итальянских вин VIP VINO. Прямые поставки для ресторанов и магазинов в Ташкенте.">
+    <meta name="keywords" content="итальянское вино, купить вино оптом, Classico, Tradizione, Incontro, Emozioni, Nabucco">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Итальянские вина — VIP VINO">
+    <meta property="og:description" content="Изысканные итальянские вина премиум-класса. Смотрите каталог и оформляйте заказ.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/4.png">
+    <meta property="og:type" content="website">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+    <header class="glass-header">
+        <nav class="nav-menu">
+            <a href="index.html">Главная</a>
+            <a href="catalog.html">Весь каталог</a>
+            <a href="wine.html" class="active">Вина</a>
+            <a href="sparkling.html">Шампанское</a>
+            <a href="contacts.html">Контакты</a>
+            <div class="cart-badge" id="cartTrigger">🛒 Корзина (<span id="cartCount">0</span>)</div>
+        </nav>
+        <div class="brand-subtitle">Итальянские традиции с 2006 года</div>
+        <h1>Коллекция вин</h1>
+        <p>Изысканные тихие и полусладкие вина прямиком из Италии</p>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h2 class="section-title">Ассортимент вин</h2>
+            <div id="catalogContainer" class="catalog-grid">
+                <!-- Карточки вин подгружаются автоматически из script.js -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Модальное окно корзины -->
+    <div id="cartModal" class="modal-overlay hidden-content">
+        <div class="glass-card modal-content" style="max-width: 600px;">
+            <h3>Ваша корзина заказов</h3>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="storeNameInput" style="display: block; font-size: 0.9rem; margin-bottom: 5px; color: var(--wine-color); font-weight: 500;">Название магазина / торговой точки:</label>
+                <input type="text" id="storeNameInput" placeholder="Введите название магазина..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gold-color); background: rgba(255,253,228,0.7); font-family: 'Roboto', sans-serif;">
+            </div>
+
+            <div id="cartItemsList" class="cart-items-container">
+                <p>Корзина пуста</p>
+            </div>
+            
+            <div class="cart-total">Итого: <span id="cartTotalPrice">0</span> сум</div>
+            
+            <div class="modal-buttons" style="margin-bottom: 20px;">
+                <button id="closeCartBtn" class="btn-secondary">Закрыть</button>
+                <button id="checkoutBtn" class="btn-primary">Оформить заказ</button>
+            </div>
+
+            <div style="border-top: 1px solid rgba(114,47,55,0.2); padding-top: 15px;">
+                <h4 style="color: var(--wine-color); margin-bottom: 10px; font-size: 1.1rem;">История заказов</h4>
+                <div id="orderHistoryList" style="max-height: 150px; overflow-y: auto; font-size: 0.85rem; color: #444;">
+                    <p style="color: #666;">История заказов пуста</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 VIP VINO. Все права защищены.</p>
+        <p style="margin-top: 5px; color: var(--gold-color); font-weight: 500; letter-spacing: 1px;">MADE BY KIRILL</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
