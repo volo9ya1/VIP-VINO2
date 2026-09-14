@@ -46,7 +46,7 @@ const productsData = [
         // Картинка 1 (Гранат и Персик)
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
         // Картинка 2 (Вишня)
-        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
+        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
         // Картинка 3 (Мускат) - если ссылки отличаются, подставьте нужные
         imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
         // Картинка 4 (Клубника) - та, что на вашем последнем скриншоте
