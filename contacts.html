@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP VINO — Каталог & Цены</title>
+    <title>VIP VINO — Контакты</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
@@ -13,20 +13,37 @@
     <header class="glass-header">
         <nav class="nav-menu">
             <a href="index.html">Главная</a>
-            <a href="catalog.html" class="active">Каталог & Цены</a>
-            <a href="contacts.html">Контакты</a>
+            <a href="catalog.html">Каталог & Цены</a>
+            <a href="contacts.html" class="active">Контакты</a>
             <div class="cart-badge" id="cartTrigger">🛒 Корзина (<span id="cartCount">0</span>)</div>
         </nav>
         <div class="brand-subtitle">Итальянские традиции с 2006 года</div>
-        <h1>Каталог продукции</h1>
-        <p>Выберите изысканные напитки для вашего ассортимента</p>
+        <h1>Контакты руководства</h1>
+        <p>Свяжитесь с нами по любым вопросам сотрудничества и поставок</p>
     </header>
 
     <main class="container">
-        <!-- Сетка товаров каталога, которая автоматически заполняется из script.js -->
         <section class="section">
-            <div id="catalogContainer" class="catalog-grid">
-                <!-- Карточки товаров подгружаются динамически -->
+            <h2 class="section-title">Наши контакты</h2>
+            <div class="glass-card info-box" style="text-align: center;">
+                <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
+                    <div style="background: rgba(255,253,228,0.7); padding: 20px; border-radius: 12px; border: 1px solid var(--gold-color); flex: 1; min-width: 250px;">
+                        <h3 style="color: var(--wine-color); font-family: 'Playfair Display', serif; margin-bottom: 10px;">Дмитрий</h3>
+                        <p style="font-size: 1.1rem; font-weight: bold; color: #333; margin-bottom: 10px;">+998 90 928-56-88</p>
+                        <a href="tel:+998909285688" class="btn-primary" style="display: inline-block; text-decoration: none; font-size: 0.9rem;">Позвонить</a>
+                    </div>
+
+                    <div style="background: rgba(255,253,228,0.7); padding: 20px; border-radius: 12px; border: 1px solid var(--gold-color); flex: 1; min-width: 250px;">
+                        <h3 style="color: var(--wine-color); font-family: 'Playfair Display', serif; margin-bottom: 10px;">Акбар</h3>
+                        <p style="font-size: 1.1rem; font-weight: bold; color: #333; margin-bottom: 10px;">+998 90 347-58-28</p>
+                        <a href="tel:+998903475828" class="btn-primary" style="display: inline-block; text-decoration: none; font-size: 0.9rem;">Позвонить</a>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; font-size: 0.95rem; color: #555;">
+                    <p><b>Режим работы:</b> Пн - Сб с 09:00 до 19:00</p>
+                    <p style="margin-top: 5px;">Официальные поставки элитных напитков для вашего бизнеса.</p>
+                </div>
             </div>
         </section>
     </main>
