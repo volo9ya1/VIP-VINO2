@@ -38,12 +38,10 @@ const productsData = [
         options: ["Красное полусладкое", "Белое полусладкое"]
     },
     {
-            {
         id: 5,
         name: "Nabucco",
         category: "wine",
         price: 47040,
-        // По умолчанию (Гранат / Персик):
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png", 
         imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
         imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
@@ -86,7 +84,7 @@ const productsData = [
     }
 ];
 
-// Корзина и история
+// Состояние корзины и истории
 let cart = JSON.parse(localStorage.getItem('vip_vino_cart')) || [];
 let orderHistory = JSON.parse(localStorage.getItem('vip_vino_history')) || [];
 
@@ -143,7 +141,7 @@ function initCatalog() {
     });
 }
 
-// --- ПРОСТАЯ СМЕНА КАРТИНКИ ---
+// --- СМЕНА КАРТИНКИ ---
 function changeProductImage(productId) {
     const select = document.getElementById(`option-${productId}`);
     const img = document.getElementById(`img-${productId}`);
@@ -160,14 +158,6 @@ function changeProductImage(productId) {
             // ГРАНАТ и ПЕРСИК
             img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png";
         }
-    } else if (productId === 3) {
-        if (val === "Розовое полусладкое") {
-            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png";
-        } else {
-            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/6.png";
-        }
-    }
-}
     } else if (productId === 3) {
         if (val === "Розовое полусладкое") {
             img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png";
