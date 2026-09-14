@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://volo9ya1.github.io/VIP-VINO2/sitemap.xml
