@@ -22,10 +22,8 @@ const productsData = [
         name: "Incontro",
         category: "wine",
         price: 47040,
-        // Основная картинка для Incontro (например, Красное и Белое)
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/6.png",
-        // Вторая картинка для Incontro (например, для Розового — замените ссылку на вашу, если она другая)
-        secondaryImage: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png", 
+        secondaryImage: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png",
         description: "Гармоничное вино. Креп. 10.5%, сах. 50г",
         options: ["Красное полусладкое", "Белое полусладкое", "Розовое полусладкое"]
     },
@@ -43,14 +41,10 @@ const productsData = [
         name: "Nabucco",
         category: "wine",
         price: 47040,
-        // Картинка 1 (Гранат и Персик)
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
-        // Картинка 2 (Вишня)
-        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
-        // Картинка 3 (Мускат) - если ссылки отличаются, подставьте нужные
+        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
         imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
-        // Картинка 4 (Клубника) - та, что на вашем последнем скриншоте
-        imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png", 
+        imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
         description: "Фруктовая линейка Nabucco. Креп. 11%",
         options: [
             "Красное полусладкое ГРАНАТ", 
@@ -59,6 +53,15 @@ const productsData = [
             "Белое сухое МУСКАТ",
             "Розовое сухое КЛУБНИКА"
         ]
+    },
+    {
+        id: 6,
+        name: "De Sole",
+        category: "wine",
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/9.png",
+        description: "Итальянское вино De Sole. Креп. 11.5%",
+        options: ["Красное сухое", "Белое сухое"]
     },
     {
         id: 7,
@@ -135,7 +138,6 @@ function initCatalog() {
     });
 }
 
-// Универсальная функция смены картинок для Nabucco (id: 5) и Incontro (id: 3)
 function changeProductImage(productId) {
     const product = productsData.find(p => p.id === productId);
     if (!product) return;
@@ -146,7 +148,6 @@ function changeProductImage(productId) {
 
     const selectedValue = selectElement.value;
 
-    // Логика для Nabucco
     if (productId === 5) {
         if (selectedValue.includes("ГРАНАТ") || selectedValue.includes("ПЕРСИК")) {
             imgElement.src = product.image;
@@ -158,7 +159,6 @@ function changeProductImage(productId) {
             imgElement.src = product.imageStrawberry || product.image;
         }
     } 
-    // Логика для Incontro
     else if (productId === 3) {
         if (selectedValue.includes("Розовое")) {
             imgElement.src = product.secondaryImage || product.image;
@@ -296,7 +296,7 @@ function setupCartModal() {
             updateCartUI();
             if (storeNameInput) storeNameInput.value = '';
 
-            alert('Заказ успешно оформлен! Спасибо.');
+4            alert('Заказ успешно оформлен! Спасибо.');
             modal.classList.add('hidden-content');
         });
     }
@@ -313,7 +313,7 @@ function renderOrderHistory() {
 
     historyList.innerHTML = orderHistory.map(order => `
         <div style="background: rgba(255,253,228,0.5); padding: 8px; border-radius: 6px; margin-bottom: 8px; border: 1px solid rgba(212,175,55,0.4);">
-            <div style="font-weight: bold; color: var(--wine-color);">Магазин: `${order.store}` (${order.date})</div>
+            <div style="font-weight: bold; color: var(--wine-color);">Магазин: ${order.store} (${order.date})</div>
             <div style="font-size: 0.8rem; color: #555;">Итого: ${order.total.toLocaleString()} сум</div>
         </div>
     `).join('');
