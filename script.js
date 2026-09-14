@@ -42,7 +42,7 @@ const productsData = [
         category: "wine",
         price: 47040,
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
-        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
+        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
         imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
         imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
         description: "Фруктовая линейка Nabucco. Креп. 11%",
@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCartModal();
 });
 
+// Инициализация каталога с поддержкой 3D-переворота карточек
 function initCatalog() {
     const catalogContainer = document.getElementById('catalogContainer');
     if (!catalogContainer) return;
@@ -109,14 +110,15 @@ function initCatalog() {
 
     filteredProducts.forEach(product => {
         const card = document.createElement('div');
-        card.className = 'glass-card product-card';
+        card.className = 'product-card';
+        card.style.height = '430px'; // Фиксированная высота для корректного 3D-переворота
 
         let optionsHTML = '';
         if (product.options && product.options.length > 0) {
             optionsHTML = `
-                <div style="margin: 10px 0;">
-                    <label style="font-size: 0.85rem; color: var(--wine-color); display: block; margin-bottom: 3px;">Выберите вариант:</label>
-                    <select id="option-${product.id}" onchange="changeProductImage(${product.id})" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--gold-color); background: rgba(255,253,228,0.8); font-family: 'Roboto', sans-serif;">
+                <div style="margin: 5px 0;" onclick="event.stopPropagation()">
+                    <label style="font-size: 0.8rem; color: var(--wine-color); display: block; margin-bottom: 2px;">Вариант:</label>
+                    <select id="option-${product.id}" onchange="changeProductImage(event, ${product.id})" style="width: 100%; padding: 5px; border-radius: 6px; border: 1px solid var(--gold-color); background: rgba(255,253,228,0.9); font-size: 0.85rem;">
                         ${product.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
                     </select>
                 </div>
@@ -124,13 +126,38 @@ function initCatalog() {
         }
 
         card.innerHTML = `
-            <img id="img-${product.id}" src="${product.image}" alt="${product.name}" class="product-img" style="width: 100%; height: 220px; object-fit: contain; background: rgba(255,255,255,0.3); border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--gold-color);">
-            <h3 style="font-family: 'Playfair Display', serif; color: var(--wine-color); font-size: 1.2rem; margin-bottom: 5px;">${product.name}</h3>
-            <p style="font-size: 0.85rem; color: #555; margin-bottom: 10px; min-height: 35px;">${product.description}</p>
-            ${optionsHTML}
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                <span style="font-weight: bold; color: var(--wine-color); font-size: 1.1rem;">${product.price.toLocaleString()} сум</span>
-                <button onclick="addToCart(${product.id})" class="btn-primary" style="padding: 6px 12px; font-size: 0.9rem;">В корзину</button>
+            <div class="card-inner" onclick="flipCard(event, this)">
+                <!-- Лицевая сторона карточки -->
+                <div class="card-front">
+                    <div>
+                        <img id="img-${product.id}" src="${product.image}" alt="${product.name}" style="width: 100%; height: 150px; object-fit: contain; background: rgba(255,255,255,0.4); border-radius: 8px; margin-bottom: 8px; border: 1px solid var(--gold-color);">
+                        <h3 style="font-family: 'Playfair Display', serif; color: var(--wine-color); font-size: 1.1rem; margin-bottom: 3px;">${product.name}</h3>
+                        <p style="font-size: 0.8rem; color: #555; margin-bottom: 5px; min-height: 30px;">${product.description}</p>
+                        ${optionsHTML}
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                        <span style="font-weight: bold; color: var(--wine-color); font-size: 1rem;">${product.price.toLocaleString()} сум</span>
+                        <button onclick="addToCart(event, ${product.id})" class="btn-primary" style="padding: 6px 12px; font-size: 0.85rem;">В корзину</button>
+                    </div>
+                    <div style="text-align: center; font-size: 0.75rem; color: #888; margin-top: 4px;">Нажмите для подробного описания ℹ️</div>
+                </div>
+
+                <!-- Обратная сторона карточки (подробное описание) -->
+                <div class="card-back">
+                    <button class="close-flip-btn" onclick="unflipCard(event, this)">&times;</button>
+                    <div>
+                        <h3 style="font-family: 'Playfair Display', serif; color: var(--gold-color); font-size: 1.15rem; margin-bottom: 8px; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 4px;">${product.name} — Описание</h3>
+                        
+                        <!-- ================================================= -->
+                        <!-- 📝 МЕТКА ДЛЯ ВАШЕГО ПОДРОБНОГО ОПИСАНИЯ ТОВАРА: -->
+                        <p style="font-size: 0.85rem; line-height: 1.4; color: #f5f5f5;">
+                            Здесь вы можете написать подробное описание для товара ${product.name}. Расскажите про вкусовые ноты, выдержку и рекомендации к подаче...
+                        </p>
+                        <!-- ================================================= -->
+
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--gold-color); text-align: center; margin-top: 10px;">VIP VINO Collection</div>
+                </div>
             </div>
         `;
 
@@ -138,7 +165,24 @@ function initCatalog() {
     });
 }
 
-function changeProductImage(productId) {
+// Функции переворота карточки
+function flipCard(event, element) {
+    if (event.target.tagName === 'SELECT' || event.target.tagName === 'OPTION' || event.target.tagName === 'BUTTON') {
+        return;
+    }
+    const productCard = element.closest('.product-card');
+    productCard.classList.add('flipped');
+}
+
+function unflipCard(event, buttonElement) {
+    event.stopPropagation();
+    const productCard = buttonElement.closest('.product-card');
+    productCard.classList.remove('flipped');
+}
+
+// Смена изображения при выборе варианта в выпадающем списке
+function changeProductImage(event, productId) {
+    event.stopPropagation();
     const product = productsData.find(p => p.id === productId);
     if (!product) return;
 
@@ -168,7 +212,9 @@ function changeProductImage(productId) {
     }
 }
 
-function addToCart(productId) {
+// Добавление в корзину
+function addToCart(event, productId) {
+    event.stopPropagation();
     const product = productsData.find(p => p.id === productId);
     if (!product) return;
 
@@ -190,14 +236,14 @@ function addToCart(productId) {
             name: product.name,
             price: product.price,
             image: product.image,
-            selectedOption: selectedOption,
+            variant: selectedOption || 'Стандарт',
             quantity: 1
         });
     }
 
     saveCart();
     updateCartUI();
-    showNotification(`Товар "${product.name}"${selectedOption ? ' (' + selectedOption + ')' : ''} добавлен в корзину!`);
+    showNotification(`Товар "${product.name}" добавлен в корзину!`);
 }
 
 function saveCart() {
@@ -219,7 +265,7 @@ function updateCartUI() {
             cartItemsList.innerHTML = cart.map((item, index) => `
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(114,47,55,0.1); padding-bottom: 8px;">
                     <div>
-                        <strong>${item.name}</strong> ${item.selectedOption ? '<br><small style="color: #666;">Вариант: ' + item.selectedOption + '</small>' : ''}
+                        <strong>${item.name}</strong> ${item.variant !== 'Стандарт' ? '<br><small style="color: #666;">Вариант: ' + item.variant + '</small>' : ''}
                         <div style="font-size: 0.85rem; color: #555;">${item.price.toLocaleString()} сум x ${item.quantity}</div>
                     </div>
                     <div>
@@ -245,6 +291,7 @@ function changeQuantity(index, delta) {
     updateCartUI();
 }
 
+// Модальное окно корзины и отправка заказа на сервер Render
 function setupCartModal() {
     const modal = document.getElementById('cartModal');
     const trigger = document.getElementById('cartTrigger');
@@ -253,6 +300,7 @@ function setupCartModal() {
 
     if (trigger && modal) {
         trigger.addEventListener('click', () => {
+            modal.style.display = 'flex';
             modal.classList.remove('hidden-content');
             renderOrderHistory();
         });
@@ -260,44 +308,71 @@ function setupCartModal() {
 
     if (closeBtn && modal) {
         closeBtn.addEventListener('click', () => {
-            modal.classList.add('hidden-content');
+            modal.style.display = 'none';
         });
     }
 
     if (checkoutBtn) {
-        checkoutBtn.addEventListener('click', () => {
+        checkoutBtn.addEventListener('click', async () => {
             if (cart.length === 0) {
                 alert('Ваша корзина пуста!');
                 return;
             }
 
-            const storeNameInput = document.getElementById('storeNameInput');
-            const storeName = storeNameInput ? storeNameInput.value.trim() : '';
+            const phoneInput = document.getElementById('userPhone').value.trim();
+            const locationInput = document.getElementById('userLocation').value.trim();
 
-            if (!storeName) {
-                alert('Пожалуйста, введите название магазина или торговой точки!');
-                if (storeNameInput) storeNameInput.focus();
+            if (!phoneInput) {
+                alert('⚠️ Пожалуйста, введите номер телефона! Без него заказ не может быть принят.');
+                document.getElementById('userPhone').focus();
                 return;
             }
 
             const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const orderRecord = {
-                date: new Date().toLocaleString(),
-                store: storeName,
-                items: [...cart],
-                total: totalPrice
+
+            const orderData = {
+                items: cart,
+                totalPrice: totalPrice,
+                location: locationInput,
+                phone: phoneInput
             };
 
-            orderHistory.unshift(orderRecord);
-            localStorage.setItem('vip_vino_history', JSON.stringify(orderHistory));
+            try {
+                // ⚠️ Вставьте ниже ссылку на ваш развернутый сервер на Render
+                const response = await fetch('https://vip-vino-backend.onrender.com/api/order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                });
 
-            cart = [];
-            saveCart();
-            updateCartUI();
-            if (storeNameInput) storeNameInput.value = '';
+                const result = await response.json();
 
-            alert('Заказ успешно оформлен! Спасибо.');
-            modal.classList.add('hidden-content');
+                if (result.success) {
+                    const orderRecord = {
+                        date: new Date().toLocaleString(),
+                        phone: phoneInput,
+                        items: [...cart],
+                        total: totalPrice
+                    };
+
+                    orderHistory.unshift(orderRecord);
+                    localStorage.setItem('vip_vino_history', JSON.stringify(orderHistory));
+
+                    cart = [];
+                    saveCart();
+                    updateCartUI();
+                    document.getElementById('userPhone').value = '';
+                    if (document.getElementById('userLocation')) document.getElementById('userLocation').value = '';
+
+                    alert('🎉 Заказ успешно оформлен! Уведомление отправлено в Telegram.');
+                    modal.style.display = 'none';
+                } else {
+                    alert('Ошибка: ' + (result.error || 'Не удалось отправить заказ'));
+                }
+            } catch (err) {
+                console.error(err);
+                alert('❌ Ошибка соединения с сервером. Убедитесь, что сервер запущен.');
+            }
         });
     }
 }
@@ -307,13 +382,13 @@ function renderOrderHistory() {
     if (!historyList) return;
 
     if (orderHistory.length === 0) {
-        historyList.innerHTML = '<p style="color: #666;">История заказов пуста</p>';
+        historyList.innerHTML = '<p style="color: #666; font-size: 0.85rem;">История заказов пуста</p>';
         return;
     }
 
     historyList.innerHTML = orderHistory.map(order => `
-        <div style="background: rgba(255,253,228,0.5); padding: 8px; border-radius: 6px; margin-bottom: 8px; border: 1px solid rgba(212,175,55,0.4);">
-            <div style="font-weight: bold; color: var(--wine-color);">Магазин: ${order.store} (${order.date})</div>
+        <div style="background: rgba(255,253,228,0.7); padding: 8px; border-radius: 6px; margin-bottom: 8px; border: 1px solid rgba(212,175,55,0.4);">
+            <div style="font-weight: bold; color: var(--wine-color); font-size: 0.85rem;">Телефон: ${order.phone} (${order.date})</div>
             <div style="font-size: 0.8rem; color: #555;">Итого: ${order.total.toLocaleString()} сум</div>
         </div>
     `).join('');
@@ -323,15 +398,15 @@ function showNotification(text) {
     const notif = document.createElement('div');
     notif.textContent = text;
     notif.style.position = 'fixed';
-    notif.style.bottom = '20px';
+    notif.style.bottom = '90px';
     notif.style.right = '20px';
     notif.style.background = 'var(--wine-color)';
     notif.style.color = 'var(--gold-color)';
     notif.style.padding = '10px 20px';
     notif.style.borderRadius = '8px';
     notif.style.border = '1px solid var(--gold-color)';
-    notif.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
-    notif.style.zIndex = '1000';
+    notif.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+    notif.style.zIndex = '10001';
     notif.style.fontFamily = 'Roboto, sans-serif';
     notif.style.fontSize = '0.9rem';
 
