@@ -42,12 +42,9 @@ const productsData = [
         name: "Nabucco",
         category: "wine",
         price: 47040,
-        // По умолчанию (Гранат / Персик):
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png", 
-        // Вишня и Мускат:
         imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
         imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
-        // Клубника:
         imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
         description: "Фруктовая линейка Nabucco. Креп. 11%",
         options: [
@@ -87,7 +84,7 @@ const productsData = [
     }
 ];
 
-// Состояние корзины и истории заказов
+// Корзина и история
 let cart = JSON.parse(localStorage.getItem('vip_vino_cart')) || [];
 let orderHistory = JSON.parse(localStorage.getItem('vip_vino_history')) || [];
 
@@ -97,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCartModal();
 });
 
-// --- ИНИЦИАЛИЗАЦИЯ И ОТРИСОВКА КАТАЛОГА ---
+// --- ОТРИСОВКА КАТАЛОГА ---
 function initCatalog() {
     const catalogContainer = document.getElementById('catalogContainer');
     if (!catalogContainer) return;
@@ -144,38 +141,33 @@ function initCatalog() {
     });
 }
 
-// --- ТОЧНАЯ СМЕНА КАРТИНКИ ДЛЯ NABUCCO ---
+// --- ПРОСТАЯ СМЕНА КАРТИНКИ ---
 function changeProductImage(productId) {
-    const product = productsData.find(p => p.id === productId);
-    if (!product) return;
+    const select = document.getElementById(`option-${productId}`);
+    const img = document.getElementById(`img-${productId}`);
+    if (!select || !img) return;
 
-    const selectElement = document.getElementById(`option-${productId}`);
-    const imgElement = document.getElementById(`img-${productId}`);
-    if (!selectElement || !imgElement) return;
-
-    const selectedValue = selectElement.value;
+    const val = select.value;
 
     if (productId === 5) {
-        if (selectedValue.includes("ВИШНЯ")) {
-            imgElement.src = product.imageCherry; // Фото 1.png (Вишня/Мускат)
-        } else if (selectedValue.includes("МУСКАТ")) {
-            imgElement.src = product.imageMuscat; // Фото 1.png
-        } else if (selectedValue.includes("КЛУБНИКА")) {
-            imgElement.src = product.imageStrawberry; // Фото 2.png (Клубника)
+        if (val === "Красное полусладкое ВИШНЯ" || val === "Белое сухое МУСКАТ") {
+            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png";
+        } else if (val === "Розовое сухое КЛУБНИКА") {
+            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png";
         } else {
-            imgElement.src = product.image; // Фото 3.png (Гранат/Персик)
+            // ГРАНАТ и ПЕРСИК
+            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png";
         }
-    } 
-    else if (productId === 3) {
-        if (selectedValue.includes("Розовое")) {
-            imgElement.src = product.secondaryImage || product.image;
+    } else if (productId === 3) {
+        if (val === "Розовое полусладкое") {
+            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png";
         } else {
-            imgElement.src = product.image;
+            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/6.png";
         }
     }
 }
 
-// --- ДОБАВЛЕНИЕ В КОРЗИНУ ---
+// --- КОРЗИНА ---
 function addToCart(productId) {
     const product = productsData.find(p => p.id === productId);
     if (!product) return;
@@ -212,7 +204,6 @@ function saveCart() {
     localStorage.setItem('vip_vino_cart', JSON.stringify(cart));
 }
 
-// --- ОБНОВЛЕНИЕ ИНТЕРФЕЙСА КОРЗИНЫ ---
 function updateCartUI() {
     const cartCount = document.getElementById('cartCount');
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -255,7 +246,7 @@ function changeQuantity(index, delta) {
     updateCartUI();
 }
 
-// --- НАСТРОЙКА МОДАЛЬНОГО ОКНА КОРЗИНЫ ---
+// --- МОДАЛКА И ОФОРМЛЕНИЕ ---
 function setupCartModal() {
     const modal = document.getElementById('cartModal');
     const triggers = document.querySelectorAll('#cartTrigger, .floating-cart-btn');
