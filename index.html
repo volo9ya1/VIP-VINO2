@@ -4,14 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIP VINO — Главная</title>
+    <!-- Подключение шрифтов -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <!-- Шапка сайта -->
-    <header class="header">
+    <header class="glass-header">
         <div class="header-content">
+            <div class="brand">
+                <h1>VIP VINO</h1>
+                <p class="brand-subtitle">Итальянские традиции с 2006 года</p>
+            </div>
             <nav class="nav-menu">
                 <a href="index.html" class="nav-link active">Главная</a>
                 <a href="wine.html" class="nav-link">Вина</a>
@@ -21,64 +28,36 @@
     </header>
 
     <!-- Основной контент главной страницы -->
-    <main class="main-container">
-        <section class="hero-section glass-card">
+    <main class="container">
+        
+        <!-- Герой-блок / Приветствие -->
+        <section class="hero-section">
+            <span class="gold-badge">Элитный алкоголь</span>
             <h1>VIP VINO</h1>
-            <p>Итальянские традиции с 2006 года. Изысканные напитки для вашего ассортимента.</p>
+            <p class="hero-desc">Итальянские традиции с 2006 года. Изысканные напитки премиального качества для вашего бизнеса и торжеств.</p>
+            
             <div class="hero-buttons">
                 <a href="wine.html" class="btn-primary">Каталог вин</a>
                 <a href="sparkling.html" class="btn-primary">Шампанское</a>
             </div>
         </section>
 
+        <!-- Блок "О компании" -->
         <section class="about-section">
             <h2>О нашей компании</h2>
-            <div class="glass-card">
-                <p>Мы поставляем элитные напитки высочайшего качества. Наш каталог включает в себя лучшие линейки вин и шампанского, проверенные временем и полюбившиеся клиентам.</p>
-            </div>
+            <div class="gold-line"></div>
+            <p>
+                Мы поставляем элитные напитки высочайшего качества. Наш каталог включает в себя лучшие линейки вин и шампанского, проверенные временем и полюбившиеся клиентам.
+            </p>
         </section>
+
     </main>
 
-    <!-- Плавающая кнопка корзины -->
-    <div id="cartTrigger" class="floating-cart-btn">
-        🛒 <span id="cartCount">0</span>
-    </div>
-
-    <!-- Модальное окно корзины (скрыто по умолчанию через CSSкласс hidden-content) -->
-    <div id="cartModal" class="modal hidden-content">
-        <div class="glass-card modal-content">
-            <button id="closeCartBtn" class="close-btn">&times;</button>
-            <h2>Ваша корзина</h2>
-            
-            <div id="cartItemsList" class="cart-items-list">
-                <!-- Сюда динамически выводятся товары -->
-            </div>
-
-            <div class="cart-total">
-                Итого: <span id="cartTotalPrice">0</span> сум
-            </div>
-
-            <!-- Форма заказа -->
-            <div class="checkout-form">
-                <input type="text" id="userPhone" placeholder="Введите номер телефона (+998...) *" required>
-                <input type="text" id="userLocation" placeholder="Ваш адрес / геопозиция (необязательно)">
-                <button id="checkoutBtn" class="btn-primary w-100">Оформить заказ</button>
-            </div>
-
-            <!-- История заказов -->
-            <div class="order-history-section">
-                <h4>История заказов:</h4>
-                <div id="order-history-list"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Подвал -->
+    <!-- Подвал сайта -->
     <footer>
-        <p>&copy; 2026 VIP VINO. Все права защищены.</p>
+        <p>© 2026 VIP VINO. Все права защищены.</p>
         <p class="author">MADE BY KIRILL</p>
     </footer>
 
-    <script src="script.js"></script>
 </body>
 </html>
