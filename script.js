@@ -43,7 +43,7 @@ const productsData = [
         category: "wine",
         price: 47040,
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
-        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
+        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
         imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
         imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
         description: "Фруктовая линейка Nabucco. Креп. 11%",
@@ -57,11 +57,11 @@ const productsData = [
     },
     {
         id: 6,
-        name: "De Sole",
+        name: "De Sde Mona",
         category: "wine",
         price: 47040,
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/9.png",
-        description: "Итальянское вино De Sole. Креп. 11.5%",
+        description: "Итальянское вино De Sde Mona. Креп. 11.5%",
         options: ["Красное сухое", "Белое сухое"]
     },
     {
