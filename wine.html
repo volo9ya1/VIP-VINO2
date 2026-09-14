@@ -14,6 +14,7 @@
         <div class="header-content">
             <nav class="nav-menu">
                 <a href="index.html" class="nav-link">Главная</a>
+                <a href="catalog.html" class="nav-link">Весь каталог</a>
                 <a href="wine.html" class="nav-link active">Вина</a>
                 <a href="sparkling.html" class="nav-link">Шампанское</a>
             </nav>
@@ -22,50 +23,59 @@
 
     <!-- Основной контент каталога вин -->
     <main class="main-container">
-        <section style="text-align: center; padding: 20px 0;">
-            <p style="font-size: 0.8rem; color: var(--gold-color); letter-spacing: 1px; text-transform: uppercase;">Итальянские традиции с 2006 года</p>
-            <h1 style="font-family: 'Playfair Display', serif; color: var(--wine-color); font-size: 1.8rem; margin: 5px 0;">Каталог вин</h1>
-            <p style="color: #555; font-size: 0.9rem;">Выберите изысканные напитки для вашего ассортимента.</p>
+        <section class="page-title-section">
+            <p class="subtitle">Итальянские традиции с 2006 года</p>
+            <h1>Каталог вин</h1>
+            <p class="description">Выберите изысканные напитки для вашего ассортимента.</p>
         </section>
 
-        <!-- Контейнер для карточек (заполняется из script.js) -->
-        <div id="catalogContainer"></div>
+        <!-- Контейнер для карточек товаров -->
+        <div id="catalogContainer" class="catalog-grid"></div>
     </main>
 
-    <!-- Плавающая кнопка корзины (поверх всего в правом нижнем углу) -->
+    <!-- Плавающая кнопка корзины -->
     <div id="cartTrigger" class="floating-cart-btn">
         🛒 <span id="cartCount">0</span>
     </div>
 
     <!-- Модальное окно корзины -->
-    <div id="cartModal" class="modal hidden-content" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 10000;">
-        <div class="glass-card" style="background: #fff; width: 90%; max-width: 450px; padding: 20px; border-radius: 12px; position: relative; max-height: 90vh; overflow-y: auto;">
-            <button id="closeCartBtn" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--wine-color);">&times;</button>
-            <h2 style="font-family: 'Playfair Display', serif; color: var(--wine-color); margin-bottom: 15px;">Ваша корзина</h2>
+    <div id="cartModal" class="modal hidden-content">
+        <div class="glass-card modal-content">
+            <button id="closeCartBtn" class="close-btn">&times;</button>
+            <h2>Ваша корзина</h2>
             
-            <div id="cartItemsList" style="margin-bottom: 15px; max-height: 200px; overflow-y: auto;"></div>
+            <div id="cartItemsList" class="cart-items-container"></div>
 
-            <div style="font-weight: bold; margin-bottom: 15px; color: var(--wine-color); text-align: right; font-size: 1.1rem;">
+            <div class="cart-total">
                 Итого: <span id="cartTotalPrice">0</span> сум
             </div>
 
-            <div style="border-top: 1px solid rgba(114,47,55,0.2); padding-top: 15px;">
-                <input type="text" id="userPhone" placeholder="Введите номер телефона (+998...) *" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 6px; border: 1px solid var(--gold-color); box-sizing: border-box;">
-                <input type="text" id="userLocation" placeholder="Ваш адрес / геопозиция (необязательно)" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 6px; border: 1px solid var(--gold-color); box-sizing: border-box;">
-                <button id="checkoutBtn" class="btn-primary" style="width: 100%; padding: 12px; font-size: 1rem;">Оформить заказ</button>
+            <!-- Форма заказа -->
+            <div class="checkout-form">
+                <div class="form-group">
+                    <input type="text" id="storeNameInput" placeholder="Название магазина / точки (необязательно)">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="userPhone" placeholder="Введите номер телефона (+998...) *" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="userLocation" placeholder="Ваш адрес / геопозиция (необязательно)">
+                </div>
+                <button id="checkoutBtn" class="btn-primary w-100">Оформить заказ</button>
             </div>
 
-            <div style="margin-top: 20px; border-top: 1px dashed var(--gold-color); padding-top: 15px;">
-                <h4 style="color: var(--wine-color); margin-bottom: 8px; font-size: 0.95rem;">История заказов:</h4>
-                <div id="orderHistoryList" style="max-height: 120px; overflow-y: auto; font-size: 0.85rem;"></div>
+            <!-- История заказов -->
+            <div class="order-history-section">
+                <h4>История заказов:</h4>
+                <div id="orderHistoryList" class="order-history-list"></div>
             </div>
         </div>
     </div>
 
     <!-- Подвал -->
-    <footer style="text-align: center; padding: 20px; color: var(--gold-color); font-size: 0.85rem; margin-top: 40px;">
+    <footer>
         <p>&copy; 2026 VIP VINO. Все права защищены.</p>
-        <p style="margin-top: 5px; font-weight: bold;">MADE BY KIRILL</p>
+        <p class="author">MADE BY KIRILL</p>
     </footer>
 
     <script src="script.js"></script>
