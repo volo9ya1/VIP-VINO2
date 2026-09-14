@@ -56,7 +56,7 @@ const productsData = [
     },
     {
         id: 6,
-        name: "De Sole",
+        name: "De sde Mona",
         category: "wine",
         price: 47040,
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/9.png",
