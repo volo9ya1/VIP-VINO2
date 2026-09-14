@@ -1,417 +1,239 @@
-const productsData = [
-    {
-        id: 1,
-        name: "Classico",
-        category: "wine",
-        price: 47040,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/4.png",
-        description: "Итальянское вино. Креп. 12%",
-        options: ["Красное сухое", "Белое сухое"]
-    },
-    {
-        id: 2,
-        name: "Tradizione",
-        category: "wine",
-        price: 47040,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/5.png",
-        description: "Традиционное вино. Креп. 11%, сах. 25г",
-        options: ["Красное полусухое", "Белое полусухое"]
-    },
-    {
-        id: 3,
-        name: "Incontro",
-        category: "wine",
-        price: 47040,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/6.png",
-        secondaryImage: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png",
-        description: "Гармоничное вино. Креп. 10.5%, сах. 50г",
-        options: ["Красное полусладкое", "Белое полусладкое", "Розовое полусладкое"]
-    },
-    {
-        id: 4,
-        name: "Emozioni",
-        category: "wine",
-        price: 47040,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/8.png",
-        description: "Яркие эмоции. Креп. 10.5%, сах. 80г",
-        options: ["Красное полусладкое", "Белое полусладкое"]
-    },
-    {
-        id: 5,
-        name: "Nabucco",
-        category: "wine",
-        price: 47040,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
-        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
-        imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
-        imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
-        description: "Фруктовая линейка Nabucco. Креп. 11%",
-        options: [
-            "Красное полусладкое ГРАНАТ", 
-            "Белое полусладкое ПЕРСИК", 
-            "Красное полусладкое ВИШНЯ", 
-            "Белое сухое МУСКАТ",
-            "Розовое сухое КЛУБНИКА"
-        ]
-    },
-    {
-        id: 6,
-        name: "De sde Mona",
-        category: "wine",
-        price: 47040,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/9.png",
-        description: "Итальянское вино De Sole. Креп. 11.5%",
-        options: ["Красное сухое", "Белое сухое"]
-    },
-    {
-        id: 7,
-        name: "Buonsecco ASTI",
-        category: "sparkling",
-        price: 54880,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/10.png",
-        description: "Шампанское полусладкое. 11% 0.75 л.",
-        options: null
-    },
-    {
-        id: 8,
-        name: "Buonsecco Розовое",
-        category: "sparkling",
-        price: 38080,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/10.png",
-        description: "Розовое сухое вино. 11% 0.75 л.",
-        options: null
-    }
-];
-
-let cart = JSON.parse(localStorage.getItem('vip_vino_cart')) || [];
-let orderHistory = JSON.parse(localStorage.getItem('vip_vino_history')) || [];
-
-document.addEventListener('DOMContentLoaded', () => {
-    initCatalog();
-    updateCartUI();
-    setupCartModal();
-});
-
-// Инициализация каталога с поддержкой 3D-переворота карточек
-function initCatalog() {
-    const catalogContainer = document.getElementById('catalogContainer');
-    if (!catalogContainer) return;
-
-    catalogContainer.innerHTML = '';
-
-    const currentPage = window.location.pathname;
-    let filteredProducts = productsData;
-
-    if (currentPage.includes('wine.html')) {
-        filteredProducts = productsData.filter(p => p.category === 'wine');
-    } else if (currentPage.includes('sparkling.html')) {
-        filteredProducts = productsData.filter(p => p.category === 'sparkling');
-    }
-
-    filteredProducts.forEach(product => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.style.height = '430px'; // Фиксированная высота для корректного 3D-переворота
-
-        let optionsHTML = '';
-        if (product.options && product.options.length > 0) {
-            optionsHTML = `
-                <div style="margin: 5px 0;" onclick="event.stopPropagation()">
-                    <label style="font-size: 0.8rem; color: var(--wine-color); display: block; margin-bottom: 2px;">Вариант:</label>
-                    <select id="option-${product.id}" onchange="changeProductImage(event, ${product.id})" style="width: 100%; padding: 5px; border-radius: 6px; border: 1px solid var(--gold-color); background: rgba(255,253,228,0.9); font-size: 0.85rem;">
-                        ${product.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
-                    </select>
-                </div>
-            `;
-        }
-
-        card.innerHTML = `
-            <div class="card-inner" onclick="flipCard(event, this)">
-                <!-- Лицевая сторона карточки -->
-                <div class="card-front">
-                    <div>
-                        <img id="img-${product.id}" src="${product.image}" alt="${product.name}" style="width: 100%; height: 150px; object-fit: contain; background: rgba(255,255,255,0.4); border-radius: 8px; margin-bottom: 8px; border: 1px solid var(--gold-color);">
-                        <h3 style="font-family: 'Playfair Display', serif; color: var(--wine-color); font-size: 1.1rem; margin-bottom: 3px;">${product.name}</h3>
-                        <p style="font-size: 0.8rem; color: #555; margin-bottom: 5px; min-height: 30px;">${product.description}</p>
-                        ${optionsHTML}
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-                        <span style="font-weight: bold; color: var(--wine-color); font-size: 1rem;">${product.price.toLocaleString()} сум</span>
-                        <button onclick="addToCart(event, ${product.id})" class="btn-primary" style="padding: 6px 12px; font-size: 0.85rem;">В корзину</button>
-                    </div>
-                    <div style="text-align: center; font-size: 0.75rem; color: #888; margin-top: 4px;">Нажмите для подробного описания ℹ️</div>
-                </div>
-
-                <!-- Обратная сторона карточки (подробное описание) -->
-                <div class="card-back">
-                    <button class="close-flip-btn" onclick="unflipCard(event, this)">&times;</button>
-                    <div>
-                        <h3 style="font-family: 'Playfair Display', serif; color: var(--gold-color); font-size: 1.15rem; margin-bottom: 8px; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 4px;">${product.name} — Описание</h3>
-                        
-                        <!-- ================================================= -->
-                        <!-- 📝 МЕТКА ДЛЯ ВАШЕГО ПОДРОБНОГО ОПИСАНИЯ ТОВАРА: -->
-                        <p style="font-size: 0.85rem; line-height: 1.4; color: #f5f5f5;">
-                            Здесь вы можете написать подробное описание для товара ${product.name}. Расскажите про вкусовые ноты, выдержку и рекомендации к подаче...
-                        </p>
-                        <!-- ================================================= -->
-
-                    </div>
-                    <div style="font-size: 0.75rem; color: var(--gold-color); text-align: center; margin-top: 10px;">VIP VINO Collection</div>
-                </div>
-            </div>
-        `;
-
-        catalogContainer.appendChild(card);
-    });
+/* --- Цветовая палитра и переменные --- */
+:root {
+    --wine-color: #5c1d24;
+    --wine-dark: #3a1015;
+    --gold-color: #d4af37;
+    --gold-light: #f3e5ab;
+    --bg-color: #faf6f0;
+    --text-color: #2c2c2c;
 }
 
-// Функции переворота карточки
-function flipCard(event, element) {
-    if (event.target.tagName === 'SELECT' || event.target.tagName === 'OPTION' || event.target.tagName === 'BUTTON') {
-        return;
-    }
-    const productCard = element.closest('.product-card');
-    productCard.classList.add('flipped');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-function unflipCard(event, buttonElement) {
-    event.stopPropagation();
-    const productCard = buttonElement.closest('.product-card');
-    productCard.classList.remove('flipped');
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-// Смена изображения при выборе варианта в выпадающем списке
-function changeProductImage(event, productId) {
-    event.stopPropagation();
-    const product = productsData.find(p => p.id === productId);
-    if (!product) return;
-
-    const selectElement = document.getElementById(`option-${productId}`);
-    const imgElement = document.getElementById(`img-${productId}`);
-    if (!selectElement || !imgElement) return;
-
-    const selectedValue = selectElement.value;
-
-    if (productId === 5) {
-        if (selectedValue.includes("ГРАНАТ") || selectedValue.includes("ПЕРСИК")) {
-            imgElement.src = product.image;
-        } else if (selectedValue.includes("ВИШНЯ")) {
-            imgElement.src = product.imageCherry || product.image;
-        } else if (selectedValue.includes("МУСКАТ")) {
-            imgElement.src = product.imageMuscat || product.image;
-        } else if (selectedValue.includes("КЛУБНИКА")) {
-            imgElement.src = product.imageStrawberry || product.image;
-        }
-    } 
-    else if (productId === 3) {
-        if (selectedValue.includes("Розовое")) {
-            imgElement.src = product.secondaryImage || product.image;
-        } else {
-            imgElement.src = product.image;
-        }
-    }
+header {
+    background: var(--wine-dark);
+    color: var(--gold-color);
+    padding: 15px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-// Добавление в корзину
-function addToCart(event, productId) {
-    event.stopPropagation();
-    const product = productsData.find(p => p.id === productId);
-    if (!product) return;
-
-    let selectedOption = null;
-    if (product.options && product.options.length > 0) {
-        const selectElement = document.getElementById(`option-${productId}`);
-        if (selectElement) {
-            selectedOption = selectElement.value;
-        }
-    }
-
-    const existingIndex = cart.findIndex(item => item.id === productId && item.selectedOption === selectedOption);
-
-    if (existingIndex > -1) {
-        cart[existingIndex].quantity += 1;
-    } else {
-        cart.push({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            image: product.image,
-            variant: selectedOption || 'Стандарт',
-            quantity: 1
-        });
-    }
-
-    saveCart();
-    updateCartUI();
-    showNotification(`Товар "${product.name}" добавлен в корзину!`);
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-function saveCart() {
-    localStorage.setItem('vip_vino_cart', JSON.stringify(cart));
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--gold-color);
+    text-decoration: none;
+    letter-spacing: 1px;
 }
 
-function updateCartUI() {
-    const cartCount = document.getElementById('cartCount');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    if (cartCount) cartCount.textContent = totalItems;
-
-    const cartItemsList = document.getElementById('cartItemsList');
-    const cartTotalPrice = document.getElementById('cartTotalPrice');
-
-    if (cartItemsList) {
-        if (cart.length === 0) {
-            cartItemsList.innerHTML = '<p style="text-align: center; color: #666;">Корзина пуста</p>';
-        } else {
-            cartItemsList.innerHTML = cart.map((item, index) => `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(114,47,55,0.1); padding-bottom: 8px;">
-                    <div>
-                        <strong>${item.name}</strong> ${item.variant !== 'Стандарт' ? '<br><small style="color: #666;">Вариант: ' + item.variant + '</small>' : ''}
-                        <div style="font-size: 0.85rem; color: #555;">${item.price.toLocaleString()} сум x ${item.quantity}</div>
-                    </div>
-                    <div>
-                        <button onclick="changeQuantity(${index}, 1)" style="padding: 2px 8px; background: var(--gold-color); border: none; border-radius: 4px; cursor: pointer;">+</button>
-                        <span style="margin: 0 5px;">${item.quantity}</span>
-                        <button onclick="changeQuantity(${index}, -1)" style="padding: 2px 8px; background: var(--gold-color); border: none; border-radius: 4px; cursor: pointer;">-</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-    }
-
-    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    if (cartTotalPrice) cartTotalPrice.textContent = totalPrice.toLocaleString();
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
 }
 
-function changeQuantity(index, delta) {
-    cart[index].quantity += delta;
-    if (cart[index].quantity <= 0) {
-        cart.splice(index, 1);
-    }
-    saveCart();
-    updateCartUI();
+nav a:hover, nav a.active {
+    color: var(--gold-color);
 }
 
-// Модальное окно корзины и отправка заказа на сервер Render
-function setupCartModal() {
-    const modal = document.getElementById('cartModal');
-    const trigger = document.getElementById('cartTrigger');
-    const closeBtn = document.getElementById('closeCartBtn');
-    const checkoutBtn = document.getElementById('checkoutBtn');
-
-    if (trigger && modal) {
-        trigger.addEventListener('click', () => {
-            modal.style.display = 'flex';
-            modal.classList.remove('hidden-content');
-            renderOrderHistory();
-        });
-    }
-
-    if (closeBtn && modal) {
-        closeBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-    }
-
-    if (checkoutBtn) {
-        checkoutBtn.addEventListener('click', async () => {
-            if (cart.length === 0) {
-                alert('Ваша корзина пуста!');
-                return;
-            }
-
-            const phoneInput = document.getElementById('userPhone').value.trim();
-            const locationInput = document.getElementById('userLocation').value.trim();
-
-            if (!phoneInput) {
-                alert('⚠️ Пожалуйста, введите номер телефона! Без него заказ не может быть принят.');
-                document.getElementById('userPhone').focus();
-                return;
-            }
-
-            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-            const orderData = {
-                items: cart,
-                totalPrice: totalPrice,
-                location: locationInput,
-                phone: phoneInput
-            };
-
-            try {
-                // ⚠️ Вставьте ниже ссылку на ваш развернутый сервер на Render
-                const response = await fetch('https://vip-vino-backend.onrender.com/api/order', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(orderData)
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    const orderRecord = {
-                        date: new Date().toLocaleString(),
-                        phone: phoneInput,
-                        items: [...cart],
-                        total: totalPrice
-                    };
-
-                    orderHistory.unshift(orderRecord);
-                    localStorage.setItem('vip_vino_history', JSON.stringify(orderHistory));
-
-                    cart = [];
-                    saveCart();
-                    updateCartUI();
-                    document.getElementById('userPhone').value = '';
-                    if (document.getElementById('userLocation')) document.getElementById('userLocation').value = '';
-
-                    alert('🎉 Заказ успешно оформлен! Уведомление отправлено в Telegram.');
-                    modal.style.display = 'none';
-                } else {
-                    alert('Ошибка: ' + (result.error || 'Не удалось отправить заказ'));
-                }
-            } catch (err) {
-                console.error(err);
-                alert('❌ Ошибка соединения с сервером. Убедитесь, что сервер запущен.');
-            }
-        });
-    }
+main {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    width: 100%;
 }
 
-function renderOrderHistory() {
-    const historyList = document.getElementById('orderHistoryList');
-    if (!historyList) return;
-
-    if (orderHistory.length === 0) {
-        historyList.innerHTML = '<p style="color: #666; font-size: 0.85rem;">История заказов пуста</p>';
-        return;
-    }
-
-    historyList.innerHTML = orderHistory.map(order => `
-        <div style="background: rgba(255,253,228,0.7); padding: 8px; border-radius: 6px; margin-bottom: 8px; border: 1px solid rgba(212,175,55,0.4);">
-            <div style="font-weight: bold; color: var(--wine-color); font-size: 0.85rem;">Телефон: ${order.phone} (${order.date})</div>
-            <div style="font-size: 0.8rem; color: #555;">Итого: ${order.total.toLocaleString()} сум</div>
-        </div>
-    `).join('');
+.btn-primary {
+    background: linear-gradient(135deg, var(--gold-color), #b8860b);
+    color: var(--wine-dark);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-function showNotification(text) {
-    const notif = document.createElement('div');
-    notif.textContent = text;
-    notif.style.position = 'fixed';
-    notif.style.bottom = '90px';
-    notif.style.right = '20px';
-    notif.style.background = 'var(--wine-color)';
-    notif.style.color = 'var(--gold-color)';
-    notif.style.padding = '10px 20px';
-    notif.style.borderRadius = '8px';
-    notif.style.border = '1px solid var(--gold-color)';
-    notif.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
-    notif.style.zIndex = '10001';
-    notif.style.fontFamily = 'Roboto, sans-serif';
-    notif.style.fontSize = '0.9rem';
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
 
-    document.body.appendChild(notif);
-    setTimeout(() => {
-        notif.remove();
-    }, 2500);
+/* --- Сетка каталога --- */
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* --- Надежные и аккуратные карточки товаров (без багов верстки) --- */
+.product-card {
+    background: rgba(255, 253, 228, 0.95);
+    border: 1px solid var(--gold-color);
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(92, 29, 36, 0.15);
+}
+
+.card-image-container {
+    width: 100%;
+    height: 160px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    overflow: hidden;
+}
+
+.card-image-container img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.product-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--wine-color);
+    font-size: 1.15rem;
+    margin-bottom: 5px;
+}
+
+.product-desc {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 10px;
+    flex-grow: 1;
+}
+
+.product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.product-price {
+    font-weight: bold;
+    color: var(--wine-color);
+    font-size: 1.05rem;
+}
+
+/* --- Модальное окно корзины --- */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background: var(--bg-color);
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    border: 2px solid var(--gold-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* --- Плавающая кнопка корзины --- */
+.cart-floating-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--wine-color);
+    color: var(--gold-color);
+    border: 2px solid var(--gold-color);
+    padding: 12px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.3s;
+}
+
+.cart-floating-btn:hover {
+    background: var(--wine-dark);
+}
+
+footer {
+    background: var(--wine-dark);
+    color: var(--gold-light);
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    margin-top: auto;
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    nav {
+        display: flex;
+        gap: 15px;
+    }
+    nav a {
+        margin-left: 0;
+    }
+    .catalog-grid {
+        grid-template-columns: 1fr;
+    }
 }
