@@ -1,11 +1,17 @@
 /* --- Цветовая палитра и переменные --- */
 :root {
-    --wine-color: #5c1d24;       /* Глубокий винный оттенок */
-    --wine-dark: #3a1015;        /* Темный винный */
-    --gold-color: #d4af37;       /* Благородное золото */
-    --gold-light: #f3e5ab;       /* Светлое золото */
-    --bg-color: #faf6f0;         /* Кремовый фон */
-    --text-color: #2c2c2c;       /* Основной цвет текста */
+    --wine-main: #4a151b;        /* Основной богатый винный фон */
+    --wine-dark: #2d0b0f;        /* Тёмно-бордовый для шапки и подвала */
+    --wine-card: rgba(60, 16, 22, 0.75); /* Полупрозрачный стеклянный фон карточек */
+    --gold-primary: #d4af37;     /* Благородное золото */
+    --gold-light: #f3e5ab;      /* Светлое золото для текста/акцентов */
+    --gold-gradient: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%);
+    --card-bg-inner: #fffdf8;    /* Фоновая подложка внутри карточки */
+    --text-light: #fefefe;
+    --text-dark: #2c2c2c;
+    --radius-main: 16px;
+    --border-gold: 1px solid rgba(212, 175, 55, 0.4);
+    --shadow-gold: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* --- Общие сбросы и стили --- */
@@ -17,27 +23,36 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    background-color: var(--wine-main);
+    background-image: 
+        radial-gradient(circle at 50% 0%, #6b1e27 0%, transparent 70%),
+        radial-gradient(circle at 80% 80%, #3a1015 0%, transparent 50%);
+    background-attachment: fixed;
+    color: var(--text-light);
     line-height: 1.6;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-/* Скрытие элементов (для корзины и других модалок) */
+/* Скрытие элементов */
 .hidden-content {
     display: none !important;
 }
 
-header {
-    background: var(--wine-dark);
-    color: var(--gold-color);
-    padding: 15px 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+/* --- Шапка сайта (Header) --- */
+header, .glass-header {
+    background: rgba(45, 11, 15, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--gold-primary);
+    padding: 18px 20px;
     position: sticky;
     top: 0;
     z-index: 1000;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+    text-align: center;
 }
 
 .header-container, .header-content {
@@ -48,133 +63,243 @@ header {
     align-items: center;
 }
 
-.logo {
+.brand-subtitle {
+    font-size: 0.75rem;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 8px;
+    opacity: 0.9;
+}
+
+header h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    color: var(--gold-color);
-    text-decoration: none;
+    font-size: 2rem;
+    color: var(--gold-light);
+    margin: 4px 0;
+    font-weight: 700;
     letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+header p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- Навигационное меню --- */
+nav.nav-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 nav.nav-menu a, .nav-link {
-    color: #fff;
+    color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
-    margin-left: 20px;
-    font-size: 0.95rem;
-    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: 25px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
 }
 
-nav.nav-menu a:hover, nav.nav-menu a.active, .nav-link.active {
-    color: var(--gold-color);
+nav.nav-menu a:hover {
+    color: var(--gold-light);
+    border-color: rgba(212, 175, 55, 0.5);
 }
 
-main, .main-container {
+nav.nav-menu a.active, .nav-link.active {
+    color: var(--wine-dark);
+    background: var(--gold-gradient);
+    font-weight: 700;
+    box-shadow: 0 2px 10px rgba(212, 175, 55, 0.4);
+}
+
+/* --- Главный контейнер --- */
+main, .main-container, .container {
     flex: 1;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 30px 20px;
+    padding: 35px 20px;
     width: 100%;
 }
 
-/* --- Стили кнопок --- */
-.btn-primary {
-    background: linear-gradient(135deg, var(--gold-color), #b8860b);
-    color: var(--wine-dark);
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: transform 0.2s, box-shadow 0.2s;
+.page-title-section {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+.page-title-section .subtitle {
+    font-size: 0.8rem;
+    color: var(--gold-primary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.page-title-section h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold-light);
+    font-size: 2.2rem;
+    margin: 5px 0;
+}
+
+.page-title-section .description {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.95rem;
 }
 
 /* --- Сетка каталога --- */
-.catalog-grid {
+.catalog-grid, #catalogContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 25px;
     margin-top: 20px;
 }
 
-/* --- Стили для 3D-переворота карточек --- */
-.product-card {
-    perspective: 1000px;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    min-height: 440px;
+/* --- Карточки товаров --- */
+.glass-card, .product-card {
+    background: var(--card-bg-inner);
+    border-radius: var(--radius-main);
+    padding: 18px;
+    border: 2px solid var(--gold-primary);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--text-dark);
 }
 
-.card-inner {
-    position: relative;
+.glass-card:hover, .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.25);
+}
+
+/* Картинка товара */
+.product-img {
     width: 100%;
-    height: 100%;
-    min-height: 440px;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
+    height: 230px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 10px;
+    padding: 8px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-img {
+    transform: scale(1.03);
+}
+
+/* Заголовки и текст внутри карточки */
+.product-card h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--wine-dark);
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.product-card p {
+    font-size: 0.88rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Выпадающие списки (Select) */
+.product-card select, select {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--gold-primary);
+    background: #fffdf5;
+    color: var(--wine-dark);
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    outline: none;
     cursor: pointer;
 }
 
-.product-card.flipped .card-inner {
-    transform: rotateY(180deg);
+/* --- Кнопки --- */
+.btn-primary {
+    background: var(--wine-main);
+    color: var(--gold-light);
+    border: 1px solid var(--gold-primary);
+    padding: 9px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
-.card-front, .card-back {
-    position: absolute;
-    top: 0;
-    left: 0;
+.btn-primary:hover {
+    background: var(--gold-gradient);
+    color: var(--wine-dark);
+    border-color: var(--gold-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--wine-dark);
+    border: 1px solid var(--wine-dark);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: var(--wine-dark);
+    color: var(--gold-light);
+}
+
+.w-100 {
     width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+}
+
+/* --- Плавающая кнопка корзины --- */
+.floating-cart-btn, .cart-badge {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--gold-gradient);
+    color: var(--wine-dark);
+    border: 1px solid #fff;
+    padding: 12px 22px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.floating-cart-btn:hover, .cart-badge:hover {
+    transform: scale(1.07);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
+}
+
+#cartCount {
+    background: var(--wine-dark);
+    color: var(--gold-light);
+    padding: 2px 8px;
     border-radius: 12px;
-    box-sizing: border-box;
-    border: 1px solid var(--gold-color);
-}
-
-.card-front {
-    background: rgba(255, 253, 228, 0.95);
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    z-index: 2;
-}
-
-.card-back {
-    background: var(--wine-color);
-    color: #fff;
-    padding: 20px;
-    transform: rotateY(180deg);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    z-index: 1;
-}
-
-.close-flip-btn {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    background: none;
-    border: none;
-    color: var(--gold-color);
-    font-size: 1.5rem;
-    cursor: pointer;
-    font-weight: bold;
-    z-index: 10;
-}
-
-.close-flip-btn:hover {
-    color: #fff;
+    font-size: 0.85rem;
 }
 
 /* --- Модальное окно корзины --- */
@@ -184,75 +309,99 @@ main, .main-container {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 2000;
-    backdrop-filter: blur(3px);
 }
 
 .modal-content {
-    background: var(--bg-color);
-    padding: 30px;
-    border-radius: 12px;
+    background: #fffdf8;
+    color: var(--text-dark);
+    padding: 28px;
+    border-radius: 18px;
     width: 90%;
-    max-width: 500px;
-    border: 2px solid var(--gold-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    max-height: 90vh;
+    max-width: 480px;
+    border: 2px solid var(--gold-primary);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    max-height: 85vh;
     overflow-y: auto;
+    position: relative;
 }
 
-/* --- Плавающая кнопка корзины (исправлено имя класса) --- */
-.floating-cart-btn, .cart-badge {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    background: var(--wine-color);
-    color: var(--gold-color);
-    border: 2px solid var(--gold-color);
-    padding: 12px 20px;
-    border-radius: 50px;
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--wine-dark);
     cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    z-index: 1500;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: background 0.3s;
 }
 
-.floating-cart-btn:hover, .cart-badge:hover {
-    background: var(--wine-dark);
+.modal h2, .modal h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--wine-dark);
+    margin-bottom: 15px;
+}
+
+.checkout-form input {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--gold-primary);
+    background: #fff;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.cart-total {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: var(--wine-dark);
+    text-align: right;
+    margin: 15px 0;
 }
 
 /* --- Подвал --- */
 footer {
     background: var(--wine-dark);
-    color: var(--gold-light);
+    color: rgba(255, 255, 255, 0.7);
     text-align: center;
-    padding: 20px;
-    font-size: 0.9rem;
+    padding: 22px 20px;
+    font-size: 0.85rem;
     margin-top: auto;
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+footer .author {
+    margin-top: 5px;
+    color: var(--gold-primary);
+    letter-spacing: 1.5px;
+    font-weight: 600;
 }
 
 /* --- Мобильная адаптивность --- */
 @media (max-width: 768px) {
-    .header-container, .header-content {
+    .header-content {
         flex-direction: column;
-        gap: 10px;
-        text-align: center;
+        gap: 12px;
     }
-    nav, .nav-menu {
-        display: flex;
-        gap: 15px;
+
+    nav.nav-menu {
+        gap: 6px;
     }
-    nav a, .nav-link {
-        margin-left: 0;
+
+    nav.nav-menu a, .nav-link {
+        font-size: 0.85rem;
+        padding: 5px 12px;
     }
-    .catalog-grid {
+
+    .catalog-grid, #catalogContainer {
         grid-template-columns: 1fr;
     }
 }
