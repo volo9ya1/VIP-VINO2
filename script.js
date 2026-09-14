@@ -40,18 +40,18 @@ const productsData = [
         name: "Nabucco",
         category: "wine",
         price: 47040,
+        // Основная картинка (Гранат и Персик)
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png",
+        // Вторая картинка для остальных вкусов (замените ссылку на вашу вторую картинку в GitHub, если имя отличается, например images/3.png или images/1.png)
+        secondaryImage: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
         description: "Фруктовая линейка Nabucco. Креп. 11%, сах. 50г",
-        options: ["Красное полусладкое ГРАНАТ", "Белое полусладкое ПЕРСИК", "Красное полусладкое ВИШНЯ", "Белое полусладкое МУСКАТ"]
-    },
-    {
-        id: 6,
-        name: "Nabucco Strawberry",
-        category: "wine",
-        price: 47040,
-        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
-        description: "Розовое полусладкое КЛУБНИКА. Креп. 11%, сах. 50г",
-        options: null
+        options: [
+            "Красное полусладкое ГРАНАТ", 
+            "Белое полусладкое ПЕРСИК", 
+            "Красное полусладкое ВИШНЯ", 
+            "Белое полусладкое МУСКАТ",
+            "Розовое полусладкое КЛУБНИКА"
+        ]
     },
     {
         id: 7,
@@ -88,7 +88,6 @@ function initCatalog() {
 
     catalogContainer.innerHTML = '';
 
-    // Определяем, какую категорию показывать в зависимости от текущей страницы
     const currentPage = window.location.pathname;
     let filteredProducts = productsData;
 
@@ -107,7 +106,7 @@ function initCatalog() {
             optionsHTML = `
                 <div style="margin: 10px 0;">
                     <label style="font-size: 0.85rem; color: var(--wine-color); display: block; margin-bottom: 3px;">Выберите вариант:</label>
-                    <select id="option-${product.id}" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--gold-color); background: rgba(255,253,228,0.8); font-family: 'Roboto', sans-serif;">
+                    <select id="option-${product.id}" onchange="changeProductImage(${product.id})" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--gold-color); background: rgba(255,253,228,0.8); font-family: 'Roboto', sans-serif;">
                         ${product.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
                     </select>
                 </div>
@@ -115,7 +114,7 @@ function initCatalog() {
         }
 
         card.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="product-img" style="width: 100%; height: 220px; object-fit: contain; background: rgba(255,255,255,0.3); border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--gold-color);">
+            <img id="img-${product.id}" src="${product.image}" alt="${product.name}" class="product-img" style="width: 100%; height: 220px; object-fit: contain; background: rgba(255,255,255,0.3); border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--gold-color);">
             <h3 style="font-family: 'Playfair Display', serif; color: var(--wine-color); font-size: 1.2rem; margin-bottom: 5px;">${product.name}</h3>
             <p style="font-size: 0.85rem; color: #555; margin-bottom: 10px; min-height: 35px;">${product.description}</p>
             ${optionsHTML}
@@ -127,6 +126,25 @@ function initCatalog() {
 
         catalogContainer.appendChild(card);
     });
+}
+
+// Функция автоматической смены картинки при выборе вкуса
+function changeProductImage(productId) {
+    const product = productsData.find(p => p.id === productId);
+    if (!product || !product.secondaryImage) return;
+
+    const selectElement = document.getElementById(`option-${productId}`);
+    const imgElement = document.getElementById(`img-${productId}`);
+    if (!selectElement || !imgElement) return;
+
+    const selectedValue = selectElement.value;
+
+    // Если выбраны первые два вкуса (Гранат или Персик) — показываем первую картинку, иначе вторую
+    if (selectedValue.includes("ГРАНАТ") || selectedValue.includes("ПЕРСИК")) {
+        imgElement.src = product.image;
+    } else {
+        imgElement.src = product.secondaryImage;
+    }
 }
 
 function addToCart(productId) {
