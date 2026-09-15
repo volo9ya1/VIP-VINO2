@@ -20,16 +20,24 @@ const productsData = [
     },
     {
         id: 3,
-        name: "Incontro",
+        name: "Incontro — Белое / Красное",
         category: "wine",
         price: 47040,
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/6.png",
-        secondaryImage: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png",
         description: "Гармоничное вино. Креп. 10.5%, сах. 50г",
-        options: ["Красное полусладкое", "Белое полусладкое", "Розовое полусладкое"]
+        options: ["Красное полусладкое", "Белое полусладкое"]
     },
     {
         id: 4,
+        name: "Incontro — Розовое",
+        category: "wine",
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png",
+        description: "Гармоничное вино. Креп. 10.5%, сах. 50г",
+        options: ["Розовое полусладкое"]
+    },
+    {
+        id: 5,
         name: "Emozioni",
         category: "wine",
         price: 47040,
@@ -38,25 +46,34 @@ const productsData = [
         options: ["Красное полусладкое", "Белое полусладкое"]
     },
     {
-        id: 5,
-        name: "Nabucco",
+        id: 6,
+        name: "Nabucco — Персик / Гранат",
         category: "wine",
         price: 47040,
         image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png", 
-        imageCherry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
-        imageMuscat: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png",
-        imageStrawberry: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png",
         description: "Фруктовая линейка Nabucco. Креп. 11%",
-        options: [
-            "Красное полусладкое ГРАНАТ", 
-            "Белое полусладкое ПЕРСИК", 
-            "Красное полусладкое ВИШНЯ", 
-            "Белое сухое МУСКАТ",
-            "Розовое сухое КЛУБНИКА"
-        ]
+        options: ["Белое полусладкое ПЕРСИК", "Красное полусладкое ГРАНАТ"]
     },
     {
-        id: 6,
+        id: 7,
+        name: "Nabucco — Вишня / Мускат",
+        category: "wine",
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png", 
+        description: "Фруктовая линейка Nabucco. Креп. 11%",
+        options: ["Красное полусладкое ВИШНЯ", "Белое сухое МУСКАТ"]
+    },
+    {
+        id: 8,
+        name: "Nabucco — Клубника",
+        category: "wine",
+        price: 47040,
+        image: "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png", 
+        description: "Фруктовая линейка Nabucco. Креп. 11%",
+        options: ["Розовое сухое КЛУБНИКА"]
+    },
+    {
+        id: 9,
         name: "De Sde Mona",
         category: "wine",
         price: 47040,
@@ -65,7 +82,7 @@ const productsData = [
         options: ["Красное сухое", "Белое сухое"]
     },
     {
-        id: 7,
+        id: 10,
         name: "Buonsecco ASTI",
         category: "sparkling",
         price: 54880,
@@ -74,7 +91,7 @@ const productsData = [
         options: null
     },
     {
-        id: 8,
+        id: 11,
         name: "Buonsecco Розовое",
         category: "sparkling",
         price: 38080,
@@ -119,7 +136,7 @@ function initCatalog() {
             optionsHTML = `
                 <div style="margin: 10px 0;">
                     <label style="font-size: 0.82rem; color: var(--wine-dark); display: block; margin-bottom: 4px; font-weight: 500;">Выберите вариант:</label>
-                    <select id="option-${product.id}" onchange="changeProductImage(${product.id})">
+                    <select id="option-${product.id}" onchange="changeProductImage(${product.id})" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--gold-color);">
                         ${product.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
                     </select>
                 </div>
@@ -127,12 +144,14 @@ function initCatalog() {
         }
 
         card.innerHTML = `
-            <img id="img-${product.id}" src="${product.image}" alt="${product.name}" class="product-img">
-            <h3>${product.name}</h3>
-            <p>${product.description}</p>
+            <div class="card-image-wrapper" style="text-align: center;">
+                <img id="img-${product.id}" src="${product.image}" alt="${product.name}" class="product-img" style="max-height: 180px; object-fit: contain;">
+            </div>
+            <h3 class="card-title" style="margin-top: 10px;">${product.name}</h3>
+            <p style="font-size: 0.85rem; color: #555;">${product.description}</p>
             ${optionsHTML}
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                <span style="font-weight: 700; color: var(--wine-dark); font-size: 1.15rem;">${product.price.toLocaleString()} сум</span>
+            <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px; border-top: 1px solid rgba(114,47,55,0.1); padding-top: 10px;">
+                <span class="card-price" style="font-weight: 700; color: var(--wine-dark); font-size: 1.15rem;">${product.price.toLocaleString()} сум</span>
                 <button onclick="addToCart(${product.id})" class="btn-primary">В корзину</button>
             </div>
         `;
@@ -146,25 +165,6 @@ function changeProductImage(productId) {
     const select = document.getElementById(`option-${productId}`);
     const img = document.getElementById(`img-${productId}`);
     if (!select || !img) return;
-
-    const val = select.value;
-
-    if (productId === 5) {
-        if (val === "Красное полусладкое ВИШНЯ" || val === "Белое сухое МУСКАТ") {
-            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/3.png";
-        } else if (val === "Розовое сухое КЛУБНИКА") {
-            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/1.png";
-        } else {
-            // ГРАНАТ и ПЕРСИК
-            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/2.png";
-        }
-    } else if (productId === 3) {
-        if (val === "Розовое полусладкое") {
-            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/7.png";
-        } else {
-            img.src = "https://raw.githubusercontent.com/volo9ya1/VIP-VINO2/main/images/6.png";
-        }
-    }
 }
 
 // --- КОРЗИНА ---
@@ -217,16 +217,16 @@ function updateCartUI() {
             cartItemsList.innerHTML = '<p style="text-align: center; color: #777; padding: 10px 0;">Корзина пуста</p>';
         } else {
             cartItemsList.innerHTML = cart.map((item, index) => `
-                <div class="cart-item-row">
+                <div class="cart-item-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px dashed #ddd; padding-bottom: 5px;">
                     <div>
                         <strong style="color: var(--wine-dark);">${item.name}</strong> 
                         ${item.selectedOption ? `<br><small style="color: #666;">Вариант: ${item.selectedOption}</small>` : ''}
                         <div style="font-size: 0.85rem; color: #555; margin-top: 2px;">${item.price.toLocaleString()} сум × ${item.quantity}</div>
                     </div>
                     <div style="display: flex; align-items: center; gap: 6px;">
-                        <button onclick="changeQuantity(${index}, -1)" class="cart-qty-btn">-</button>
+                        <button onclick="changeQuantity(${index}, -1)" class="cart-qty-btn" style="padding: 2px 8px; cursor: pointer;">-</button>
                         <span style="font-weight: bold; min-width: 18px; text-align: center;">${item.quantity}</span>
-                        <button onclick="changeQuantity(${index}, 1)" class="cart-qty-btn">+</button>
+                        <button onclick="changeQuantity(${index}, 1)" class="cart-qty-btn" style="padding: 2px 8px; cursor: pointer;">+</button>
                     </div>
                 </div>
             `).join('');
@@ -289,9 +289,9 @@ function setupCartModal() {
             const storeName = storeNameInput ? storeNameInput.value.trim() : '';
             const userPhone = userPhoneInput ? userPhoneInput.value.trim() : '';
 
-            if (!storeName) {
+            if (storeNameInput && !storeName) {
                 alert('Пожалуйста, введите название магазина!');
-                if (storeNameInput) storeNameInput.focus();
+                storeNameInput.focus();
                 return;
             }
 
@@ -306,7 +306,7 @@ function setupCartModal() {
             const orderRecord = {
                 id: Date.now(),
                 date: new Date().toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-                store: storeName,
+                store: storeName || 'Частный заказ',
                 phone: userPhone,
                 items: JSON.parse(JSON.stringify(cart)),
                 total: totalPrice
@@ -319,6 +319,7 @@ function setupCartModal() {
             saveCart();
             updateCartUI();
             if (storeNameInput) storeNameInput.value = '';
+            if (userPhoneInput) userPhoneInput.value = '';
 
             alert('Заказ успешно оформлен!');
             modal.classList.add('hidden-content');
@@ -341,12 +342,12 @@ function renderOrderHistory() {
         ).join('<br>');
 
         return `
-            <div class="history-card">
-                <div class="history-card-header">
+            <div class="history-card" style="border-bottom: 1px solid #eee; padding: 8px 0; margin-bottom: 8px;">
+                <div class="history-card-header" style="display: flex; justify-content: space-between;">
                     <span><strong>Магазин:</strong> ${order.store}</span>
                     <small style="color: #666;">${order.date}</small>
                 </div>
-                <div class="history-card-items">
+                <div class="history-card-items" style="margin: 5px 0;">
                     ${itemsDetail}
                 </div>
                 <div class="history-card-total">
@@ -361,6 +362,7 @@ function showNotification(text) {
     const notif = document.createElement('div');
     notif.textContent = text;
     notif.className = 'toast-notification';
+    notif.style.cssText = 'position: fixed; bottom: 80px; right: 25px; background: var(--wine-dark); color: #fff; padding: 10px 18px; border-radius: 8px; border: 1px solid var(--gold-color); z-index: 3000; font-size: 0.9rem;';
     document.body.appendChild(notif);
     setTimeout(() => {
         notif.remove();
