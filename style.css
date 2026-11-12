@@ -566,3 +566,67 @@ footer .author {
         right: 15px;
     }
 }
+
+/* ==========================================
+   12. СТИЛИ ДЛЯ БЛОКА РАЗРАБОТЧИКОВ (CONTACTS.HTML)
+   ========================================== */
+.developers-section {
+    background: var(--card-bg-inner);
+    color: var(--wine-dark);
+    border-radius: 20px;
+    padding: 35px 25px;
+    border: 2px solid var(--gold-primary);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    margin: 40px auto;
+    max-width: 650px;
+    text-align: center;
+}
+
+.developers-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--wine-dark);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.developers-section p {
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.developers-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.developers-buttons .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    min-width: 190px;
+    padding: 11px 22px;
+}
+
+/* Мобильная адаптивность для блока разработчиков */
+@media (max-width: 768px) {
+    .developers-section {
+        margin: 20px 15px;
+        padding: 25px 15px;
+    }
+    
+    .developers-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .developers-buttons .btn-primary {
+        width: 100%;
+    }
+}
