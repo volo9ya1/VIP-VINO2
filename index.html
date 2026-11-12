@@ -96,11 +96,41 @@
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 VIP VINO. Все права защищены.</p>
-        <p style="margin-top: 5px; color: var(--gold-color); font-weight: 500; letter-spacing: 1px;">MADE BY KIRILL</p>
-    </footer>
+  <!-- Подвал сайта -->
+<footer>
+    <p>&copy; 2026 VIP VINO. Все права защищены.</p>
+    <p class="author-credits">
+        <a href="#" id="authorLink" class="glowing-author-link">MADE BY KIRILL</a>
+    </p>
+</footer>
 
+<!-- Модальное окно авторов (вызывается по клику на MADE BY KIRILL) -->
+<div id="authorModal" class="author-modal-overlay hidden-content">
+    <div class="author-modal-card">
+        <button id="closeAuthorModal" class="author-close-btn">&times;</button>
+        <h3 class="author-modal-title">Разработчики проекта</h3>
+        
+        <div class="authors-list">
+            <!-- Автор 1 -->
+            <div class="author-item">
+                <div class="author-avatar">👨‍💻</div>
+                <div class="author-info">
+                    <a href="https://t.me/Kryushon24" target="_blank" rel="noopener noreferrer" class="author-username" style="text-decoration: none;">@Kirill</a>
+                    <p class="author-desc">Lead Developer & Architecture</p>
+                </div>
+            </div>
+
+            <!-- Автор 2 -->
+            <div class="author-item">
+                <div class="author-avatar">🎨</div>
+                <div class="author-info">
+                    <a href="https://t.me/Kryushon42" target="_blank" rel="noopener noreferrer" class="author-username" style="text-decoration: none;">@Partner</a>
+                    <p class="author-desc">UI/UX Design & Content Vision</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <script src="script.js"></script>
 </body>
 </html>
