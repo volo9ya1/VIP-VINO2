@@ -1,3 +1,10 @@
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/VIP-VINO2/sw.js')
+            .then(reg => console.log('Service Worker зарегистрирован!', reg))
+            .catch(err => console.log('Ошибка регистрации Service Worker:', err));
+    });
+}
 // --- БАЗА ДАННЫХ ТОВАРОВ ---
 const productsData = [
     {
