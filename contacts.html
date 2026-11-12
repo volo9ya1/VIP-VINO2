@@ -49,6 +49,26 @@
         </section>
     </main>
 
+    <!-- Блок разработчиков (в самом низу contacts.html перед footer) -->
+<section id="developers" class="info-card" style="margin-top: 30px; text-align: center;">
+    <h2 style="font-family: 'Playfair Display', serif; color: var(--wine-dark); margin-bottom: 10px;">Разработка и дизайн</h2>
+    <p style="color: #555; margin-bottom: 20px; font-size: 0.95rem;">
+        По вопросам создания сайтов, веб-приложений и сотрудничества:
+    </p>
+    
+    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <!-- Кнопка Кирилла -->
+        <a href="https://t.me/ТВОЙ_ЮЗЕРНЕЙМ" target="_blank" rel="noopener noreferrer" class="btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+            <span>👨‍💻</span> Telegram: @Kirill
+        </a>
+
+        <!-- Кнопка второго участника (удали, если не нужна) -->
+        <a href="https://t.me/ЮЗЕРНЕЙМ_ПАРТНЕРА" target="_blank" rel="noopener noreferrer" class="btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+            <span>🎨</span> Telegram: @Partner
+        </a>
+    </div>
+</section>
+    
     <!-- Модальное окно корзины -->
     <div id="cartModal" class="modal-overlay hidden-content">
         <div class="glass-card modal-content" style="max-width: 600px;">
@@ -79,42 +99,14 @@
         </div>
     </div>
 
-     <!-- Подвал сайта -->
+<!-- Подвал сайта -->
 <footer>
     <p>&copy; 2026 VIP VINO. Все права защищены.</p>
     <p class="author-credits">
-        <a href="#" id="authorLink" class="glowing-author-link">MADE BY KIRILL</a>
+        <a href="contacts.html#developers" class="glowing-author-link">MADE BY KIRILL</a>
     </p>
-</footer>
-
-<!-- Модальное окно авторов (вызывается по клику на MADE BY KIRILL) -->
-<div id="authorModal" class="author-modal-overlay hidden-content">
-    <div class="author-modal-card">
-        <button id="closeAuthorModal" class="author-close-btn">&times;</button>
-        <h3 class="author-modal-title">Разработчики проекта</h3>
-        
-        <div class="authors-list">
-            <!-- Автор 1 -->
-            <div class="author-item">
-                <div class="author-avatar">👨‍💻</div>
-                <div class="author-info">
-                    <a href="https://t.me/Kryushon24" target="_blank" rel="noopener noreferrer" class="author-username" style="text-decoration: none;">@Kirill</a>
-                    <p class="author-desc">Lead Developer & Architecture</p>
-                </div>
-            </div>
-
-            <!-- Автор 2 -->
-            <div class="author-item">
-                <div class="author-avatar">🎨</div>
-                <div class="author-info">
-                    <a href="https://t.me/Kryushon42" target="_blank" rel="noopener noreferrer" class="author-username" style="text-decoration: none;">@Partner</a>
-                    <p class="author-desc">UI/UX Design & Content Vision</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+</footer> 
+    
     <script src="script.js"></script>
 </body>
 </html>
