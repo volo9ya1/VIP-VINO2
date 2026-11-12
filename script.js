@@ -375,3 +375,40 @@ function showNotification(text) {
         notif.remove();
     }, 2500);
 }
+ // --- МОДАЛЬНОЕ ОКНО РАЗРАБОТЧИКОВ (MADE BY KIRILL) ---
+document.addEventListener('DOMContentLoaded', () => {
+    const authorLink = document.getElementById('authorLink');
+    const authorModal = document.getElementById('authorModal');
+    const closeAuthorModal = document.getElementById('closeAuthorModal');
+
+    if (authorLink && authorModal) {
+        authorLink.addEventListener('click', (e) => {
+            e.preventDefault(); // ОТМЕНЯЕТ СКАЧОК СТРАНИЦЫ ВВЕРХ
+            authorModal.classList.remove('hidden-content');
+            setTimeout(() => {
+                authorModal.classList.add('active');
+            }, 10);
+        });
+    }
+
+    const closeAuthorModalFunc = () => {
+        if (authorModal) {
+            authorModal.classList.remove('active');
+            setTimeout(() => {
+                authorModal.classList.add('hidden-content');
+            }, 300);
+        }
+    };
+
+    if (closeAuthorModal) {
+        closeAuthorModal.addEventListener('click', closeAuthorModalFunc);
+    }
+
+    if (authorModal) {
+        authorModal.addEventListener('click', (e) => {
+            if (e.target === authorModal) {
+                closeAuthorModalFunc();
+            }
+        });
+    }
+});
