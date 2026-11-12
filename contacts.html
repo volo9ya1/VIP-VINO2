@@ -10,20 +10,26 @@
 </head>
 <body>
 
+    <!-- Шапка сайта -->
     <header class="glass-header">
-        <nav class="nav-menu">
-            <a href="index.html">Главная</a>
-            <a href="catalog.html">Весь каталог</a>
-            <a href="wine.html">Вина</a>
-            <a href="sparkling.html">Шампанское</a>
-            <a href="contacts.html" class="active">Контакты</a>
-        </nav>
+        <div class="header-content">
+            <nav class="nav-menu">
+                <a href="index.html">Главная</a>
+                <a href="catalog.html">Весь каталог</a>
+                <a href="wine.html">Вина</a>
+                <a href="sparkling.html">Шампанское</a>
+                <a href="contacts.html" class="active">Контакты</a>
+            </nav>
+        </div>
         <div class="brand-subtitle">Итальянские традиции с 2006 года</div>
         <h1>Контакты руководства</h1>
         <p>Свяжитесь с нами по любым вопросам сотрудничества и поставок</p>
     </header>
 
+    <!-- Основной контейнер, объединяющий все карточки -->
     <main class="container">
+        
+        <!-- Первая карточка: Отдел продаж -->
         <section class="section">
             <h2 class="section-title">Наши контакты</h2>
             <div class="glass-card info-box" style="text-align: center;">
@@ -47,31 +53,33 @@
                 </div>
             </div>
         </section>
+
+        <!-- Вторая карточка: Разработка и дизайн (теперь внутри container на своем месте) -->
+        <section class="about-section glass-card" id="developers" style="margin-top: 30px; text-align: center; padding: 30px;">
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--wine-color, #4a151b); margin-bottom: 10px;">Разработка и дизайн</h2>
+            <div class="gold-line"></div>
+            <p style="color: #555; margin-bottom: 20px;">По вопросам создания сайтов, веб-приложений и сотрудничества:</p>
+
+            <div class="hero-buttons" style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <!-- Кнопка Кирилла -->
+                <a href="https://t.me/Kryushon24" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                    <span>👨‍💻</span> Telegram: @Kirill
+                </a>
+
+                <!-- Кнопка партнера -->
+                <a href="https://t.me/Kryushon42" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                    <span>🎨</span> Telegram: @Partner
+                </a>
+            </div>
+        </section>
+
     </main>
-
-<section class="developers-section" id="developers">
-    <h2>Разработка и дизайн</h2>
-    <div class="gold-line"></div>
-    <p>По вопросам создания сайтов, веб-приложений и сотрудничества:</p>
-    
-    <div class="developers-buttons">
-        <!-- Кнопка Кирилла -->
-        <a href="https://t.me/Kryushon24" target="_blank" rel="noopener noreferrer" class="btn-primary">
-            <span>👨‍💻</span> Telegram: @Kirill
-        </a>
-
-        <!-- Кнопка партнера -->
-        <a href="https://t.me/Kryushon42" target="_blank" rel="noopener noreferrer" class="btn-primary">
-            <span>🎨</span> Telegram: @Partner
-        </a>
-    </div>
-</section>
 
     <!-- Модальное окно корзины -->
     <div id="cartModal" class="modal-overlay hidden-content">
         <div class="glass-card modal-content" style="max-width: 600px;">
             <h3>Ваша корзина заказов</h3>
-            
+
             <div style="margin-bottom: 15px;">
                 <label for="storeNameInput" style="display: block; font-size: 0.9rem; margin-bottom: 5px; color: var(--wine-color); font-weight: 500;">Название магазина / торговой точки:</label>
                 <input type="text" id="storeNameInput" placeholder="Введите название магазина..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gold-color); background: rgba(255,253,228,0.7); font-family: 'Roboto', sans-serif;">
@@ -80,9 +88,9 @@
             <div id="cartItemsList" class="cart-items-container">
                 <p>Корзина пуста</p>
             </div>
-            
+
             <div class="cart-total">Итого: <span id="cartTotalPrice">0</span> сум</div>
-            
+
             <div class="modal-buttons" style="margin-bottom: 20px;">
                 <button id="closeCartBtn" class="btn-secondary">Закрыть</button>
                 <button id="checkoutBtn" class="btn-primary">Оформить заказ</button>
@@ -97,14 +105,19 @@
         </div>
     </div>
 
-<!-- Подвал сайта -->
-<footer>
-    <p>&copy; 2026 VIP VINO. Все права защищены.</p>
-    <p class="author-credits">
-        <a href="contacts.html#developers" class="glowing-author-link">MADE BY KIRILL</a>
-    </p>
-</footer> 
-    
+    <!-- Подвал сайта -->
+    <footer>
+        <p>&copy; 2026 VIP VINO. Все права защищены.</p>
+        <p class="author-credits">
+            <a href="contacts.html#developers" class="glowing-author-link">MADE BY KIRILL</a>
+        </p>
+    </footer> 
+
+    <!-- Плавающая кнопка корзины -->
+    <div class="floating-cart-btn" id="cartTrigger">
+        🛒 Корзина (<span id="cartCount">0</span>)
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
