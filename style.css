@@ -630,3 +630,23 @@ footer .author {
         width: 100%;
     }
 }
+
+.footer-card-link {
+    display: inline-block;
+    color: #d4af37;
+    text-decoration: none;
+    padding: 8px 18px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    background: rgba(255, 255, 255, 0.03);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.footer-card-link:hover {
+    transform: translateY(-3px); /* Плавный подъем вверх, как у карточки */
+    border-color: #d4af37; /* Яркая золотая рамка */
+    background: rgba(212, 175, 55, 0.1); /* Легкий золотистый фон */
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3); /* Золотое свечение снизу */
+    color: #ffd700; /* Чуть более яркое золото при наведении */
+}
