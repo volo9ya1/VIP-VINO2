@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доступ ограничен — VIP VINO</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0c0b0b;
+            color: #e0e0e0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .error-card {
+            background: #141212;
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+        .error-code {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            color: #d4af37;
+            margin: 0;
+            line-height: 1;
+            font-weight: 700;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #f3e5ab;
+            font-size: 1.6rem;
+            margin: 15px 0;
+        }
+        p {
+            color: #b5b5b5;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .btn-home {
+            display: inline-block;
+            color: #2d0b0f;
+            background: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 11px 24px;
+            border-radius: 8px;
+            border: 1px solid #d4af37;
+            transition: all 0.3s ease;
+        }
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="error-card">
+        <div class="error-code">403</div>
+        <h1>Доступ ограничен</h1>
+        <p>К сожалению, этот погреб закрыт для просмотра или у вас недостаточно прав для доступа к данному разделу оптового каталога.</p>
+        <a href="index.html" class="btn-home">Вернуться на главную</a>
+    </div>
+
+</body>
+</html>
