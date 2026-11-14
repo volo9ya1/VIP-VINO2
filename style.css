@@ -15,9 +15,10 @@
 }
 
 /* ==========================================
-   2. БАЗОВЫЕ СТИЛИ И СБРОС
+   2. БАЗОВЫЕ СТИЛИ И СБРОС (ИСПРАВЛЕНО ДЛЯ МОБИЛЬНЫХ)
    ========================================== */
-html, body {
+html {
+    background-color: #2d0b0f; /* Жестко фиксируем цвет системных полос браузера на телефоне */
     width: 100%;
     overflow-x: hidden;
 }
@@ -35,11 +36,14 @@ body {
         radial-gradient(circle at 50% 0%, #6b1e27 0%, transparent 70%),
         radial-gradient(circle at 80% 80%, #3a1015 0%, transparent 50%);
     background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
     color: var(--text-light);
     line-height: 1.6;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    width: 100%;
 }
 
 .hidden-content {
@@ -337,12 +341,12 @@ select, input[type="text"] {
 .floating-cart-btn, 
 .cart-badge, 
 #cartTrigger {
-    position: fixed !important;   /* Жестко привязываем к экрану */
-    bottom: 25px !important;      /* Отступ от нижнего края */
-    right: 25px !important;       /* Отступ от правого края */
-    top: auto !important;         /* Сбрасываем верхнюю позицию */
-    left: auto !important;        /* Сбрасываем левую позицию */
-    
+    position: fixed !important;
+    bottom: 25px !important;
+    right: 25px !important;
+    top: auto !important;
+    left: auto !important;
+
     background: var(--gold-gradient);
     color: var(--wine-dark);
     border: 1.5px solid #fff;
@@ -352,7 +356,7 @@ select, input[type="text"] {
     font-weight: 700;
     font-size: 0.95rem;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-    z-index: 1500 !important;      /* Поверх всего контента */
+    z-index: 1500 !important;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -409,7 +413,6 @@ select, input[type="text"] {
     position: relative;
 }
 
-/* Стильный круглый крестик */
 .close-btn {
     position: absolute;
     top: 14px;
@@ -516,7 +519,7 @@ select, input[type="text"] {
 }
 
 /* ==========================================
-   10. ПОДВАЛ (FOOTER)
+   10. ПОДВАЛ (FOOTER) И КАРТОЧКИ ССЫЛОК
    ========================================== */
 footer {
     background: var(--wine-dark);
@@ -533,6 +536,26 @@ footer .author {
     color: var(--gold-primary);
     letter-spacing: 1.5px;
     font-weight: 600;
+}
+
+.footer-card-link {
+    display: inline-block;
+    color: #d4af37;
+    text-decoration: none;
+    padding: 8px 18px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    background: rgba(255, 255, 255, 0.03);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.footer-card-link:hover {
+    transform: translateY(-3px);
+    border-color: #d4af37;
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+    color: #ffd700;
 }
 
 /* ==========================================
@@ -620,7 +643,7 @@ footer .author {
         margin: 20px 15px;
         padding: 25px 15px;
     }
-    
+
     .developers-buttons {
         flex-direction: column;
         gap: 12px;
@@ -629,24 +652,4 @@ footer .author {
     .developers-buttons .btn-primary {
         width: 100%;
     }
-}
-
-.footer-card-link {
-    display: inline-block;
-    color: #d4af37;
-    text-decoration: none;
-    padding: 8px 18px;
-    margin-top: 6px;
-    border-radius: 8px;
-    border: 1px solid rgba(212, 175, 55, 0.25);
-    background: rgba(255, 255, 255, 0.03);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-}
-
-.footer-card-link:hover {
-    transform: translateY(-3px); /* Плавный подъем вверх, как у карточки */
-    border-color: #d4af37; /* Яркая золотая рамка */
-    background: rgba(212, 175, 55, 0.1); /* Легкий золотистый фон */
-    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3); /* Золотое свечение снизу */
-    color: #ffd700; /* Чуть более яркое золото при наведении */
 }
